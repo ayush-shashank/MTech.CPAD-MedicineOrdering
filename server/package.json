@@ -1,0 +1,15 @@
+{
+  "name": "online-medical-application",
+  "version": "1.0.0",
+  "description": "Server for online medical transactions",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ayush",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.6.2"
+  }
+}
