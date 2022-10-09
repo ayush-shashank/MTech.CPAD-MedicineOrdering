@@ -55,8 +55,8 @@ admin.post("/product", async (req, res) => {
 // Modify Product Quantity
 admin.patch("/product/:id", async (req, res) => {
     try {
-        let product = await productModel.findByIdAndUpdate(req.params.id, { ...req.body });
-        res.json(product._id);
+        let product = await productModel.findByIdAndUpdate(req.params.id, { ...req.body }, { returnDocument: 'after' });
+        res.json(product);
     }
     catch (err) {
         console.error(err)

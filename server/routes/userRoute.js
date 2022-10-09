@@ -6,7 +6,7 @@ const productModel = require("../model/productModel");
 const user = express.Router();
 
 // Login User
-user.post("user/login", async (req, res) => {
+user.post("/user/login", async (req, res) => {
     try {
         let customer = await customerModel.findOne({ ...req.body });
         if (!customer)
@@ -34,13 +34,6 @@ user.get('/user/:id/activeTransactions', async (req, res) => {
     let id = req.params.id;
     const filter = { customerId: id, 'isActive': true };
     let result = await orderModel.find(filter).sort({ 'updatedAt': -1 });
-    res.json(result);
-});
-
-// Search Medicine by Name
-user.get('/product/search', async (req, res) => {
-    let productName = req.query.productName.trim();
-    let result = await productModel.find({ $text: { $search: productName, $caseSensitive: false } });
     res.json(result);
 });
 

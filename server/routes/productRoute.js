@@ -14,6 +14,14 @@ product.get("/product", async (req, res) => {
     }
 });
 
+// Search Medicine by Name
+product.get('/product/search', async (req, res) => {
+    let productName = req.query.productName.trim();
+    let result = await productModel.find({ $text: { $search: productName, $caseSensitive: false } });
+    console.log(result);
+    res.json(result);
+});
+
 // GET product by ID
 product.get("/product/:id", async (req, res) => {
     try {
