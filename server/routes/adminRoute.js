@@ -4,7 +4,7 @@ const productModel = require("../model/productModel");
 
 const admin = express.Router();
 
-// GET All Customers
+// GET All customers
 admin.get("/customer", async (req, res) => {
     try {
         let customers = await customerModel.find({});
@@ -12,6 +12,19 @@ admin.get("/customer", async (req, res) => {
     }
     catch (err) {
         res.status(400).send("Error fetching customers!");
+    }
+});
+
+// Add a customer
+admin.post("/customer", async (req, res) => {
+    let customer = new customerModel({ ...req.body });
+    try {
+        await customer.save();
+        res.json(customer);
+    }
+    catch (err) {
+        console.error(err)
+        res.status(400).send(err);
     }
 });
 
@@ -23,19 +36,6 @@ admin.get("/customer/:id", async (req, res) => {
     }
     catch (err) {
         res.status(400).send("Error fetching listings!");
-    }
-});
-
-// Add Customer
-admin.post("/customer", async (req, res) => {
-    let customer = new customerModel({ ...req.body });
-    try {
-        await customer.save();
-        res.json(customer);
-    }
-    catch (err) {
-        console.error(err)
-        res.status(400).send(err);
     }
 });
 

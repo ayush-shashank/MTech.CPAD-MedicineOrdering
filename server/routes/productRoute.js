@@ -4,7 +4,7 @@ const productModel = require('../model/productModel');
 const product = express.Router();
 
 // GET All products
-product.get("/product", async (req, res) => {
+product.get("/", async (req, res) => {
     try {
         let products = await productModel.find({}).limit(50)
         res.json(products);
@@ -15,15 +15,18 @@ product.get("/product", async (req, res) => {
 });
 
 // Search Medicine by Name
-product.get('/product/search', async (req, res) => {
+product.get('/search', async (req, res) => {
     let productName = req.query.productName.trim();
-    let result = await productModel.find({ $text: { $search: productName, $caseSensitive: false } });
-    console.log(result);
-    res.json(result);
+    try {
+        let result = await productModel.find({ $text: { $search: productName, $caseSensitive: false } });
+        res.json(result);
+    } catch (err) {
+        res.status(400).send("Error fetching product!");
+    }
 });
 
 // GET product by ID
-product.get("/product/:id", async (req, res) => {
+product.get("/:id", async (req, res) => {
     try {
         let product = await productModel.findById(req.params.id);
         res.json(product);

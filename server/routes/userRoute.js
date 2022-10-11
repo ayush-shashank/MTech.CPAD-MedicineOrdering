@@ -6,13 +6,13 @@ const productModel = require("../model/productModel");
 const user = express.Router();
 
 // Login User
-user.post("/user/login", async (req, res) => {
+user.post("/login", async (req, res) => {
     try {
         let customer = await customerModel.findOne({ ...req.body });
         if (!customer)
             res.send("Invalid Credentials!");
         else
-            res.json(customer._id);
+            res.json(customer);
     }
     catch (err) {
         console.error(err)
@@ -21,16 +21,16 @@ user.post("/user/login", async (req, res) => {
 });
 
 // Book Doctor
-user.get('/user/:id/bookDoctor', (req, res) => {
+user.get('/:id/bookDoctor', (req, res) => {
     res.sendStatus(404);
 });
 // Book Test
-user.get('/user/:id/bookLab', (req, res) => {
+user.get('/:id/bookLab', (req, res) => {
     res.sendStatus(404);
 });
 
 // GET Active transactions
-user.get('/user/:id/activeTransactions', async (req, res) => {
+user.get('/:id/activeTransactions', async (req, res) => {
     let id = req.params.id;
     const filter = { customerId: id, 'isActive': true };
     let result = await orderModel.find(filter).sort({ 'updatedAt': -1 });
@@ -38,7 +38,7 @@ user.get('/user/:id/activeTransactions', async (req, res) => {
 });
 
 // GET last 3 transactions
-user.get('/user/:id/latestTransactions', async (req, res) => {
+user.get('/:id/latestTransactions', async (req, res) => {
     let id = req.params.id;
     const filter = { customerId: id };
     let result = await orderModel.find(filter).sort({ 'updatedAt': -1 }).limit(3);
@@ -46,7 +46,7 @@ user.get('/user/:id/latestTransactions', async (req, res) => {
 });
 
 // POST Order Medicine
-user.post('/user/:id/orderMedicine', async (req, res) => {
+user.post('/:id/orderMedicine', async (req, res) => {
     let order = { ...req.body };
     let condition = { _id: order.productId, qtyAvailable: { $gte: order.qty } };
     let update = { $inc: { qtyAvailable: -order.qty } };
@@ -72,7 +72,7 @@ user.post('/user/:id/orderMedicine', async (req, res) => {
 });
 
 // GET User Orders
-user.get('/user/:id/orders', async (req, res) => {
+user.get('/:id/orders', async (req, res) => {
     let id = req.params.id;
     let result = await orderModel.find({ customerId: id },);
     res.json(result);
