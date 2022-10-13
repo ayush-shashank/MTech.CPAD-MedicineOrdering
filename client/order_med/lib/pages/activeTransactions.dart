@@ -1,9 +1,9 @@
-import 'dart:convert';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:order_med/model/product.dart';
-import 'package:order_med/service/networkService.dart';
+import 'package:order_med/model/orderModel.dart';
+import 'package:order_med/model/productModel.dart';
+import 'package:order_med/service/orderService.dart';
+import 'package:order_med/service/productService.dart';
+import 'package:order_med/widgets/orderCard.dart';
 import 'package:order_med/widgets/productCard.dart';
 
 class ActiveTransactions extends StatefulWidget {
@@ -14,26 +14,25 @@ class ActiveTransactions extends StatefulWidget {
 }
 
 class _ActiveTransactionsState extends State<ActiveTransactions> {
-  List<Widget> products = [];
+  List<Widget> orders = [];
   @override
   void initState() {
     super.initState();
-    getProducts();
+    getActiveTransactions();
   }
 
-  void getProducts() async {
-    String res = await Service.fetch('/product');
+  void getActiveTransactions() async {
+    List<Order> orderList = await OrderService().getActiveTransactions();
+    // List<Product> orderList = await ProductService().getAllProducts();
     // String val = await Service.fetch('/user/login', body: {
     //   "email": "gianni.hills@yahoo.com",
     //   "password": "4tKj8iA_zgj3h4g"
     // });
-    List resList = jsonDecode(res) as List;
-    Iterable<Product> productList =
-        resList.map((data) => Product.fromJson(data));
     List<Widget> widgetList =
-        productList.map((product) => ProductCard(product: product)).toList();
+        orderList.map((order) => OrderCard(order: order)).toList();
+    // orderList.map((order) => ProductCard(product: order)).toList();
     setState(() {
-      products = widgetList;
+      orders = widgetList;
     });
   }
 
@@ -52,10 +51,7 @@ class _ActiveTransactionsState extends State<ActiveTransactions> {
                 title: Text('Active Transactions'),
               ),
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(children: products),
-            )
+            Column(children: orders)
           ],
         ),
       ),

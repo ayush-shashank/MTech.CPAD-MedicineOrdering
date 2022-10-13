@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:order_med/pages/activeTransactions.dart';
-import 'package:order_med/model/product.dart';
+import 'package:order_med/model/productModel.dart';
+import 'package:order_med/pages/dashboard.dart';
 import 'package:order_med/service/networkService.dart';
 
 void main() {
@@ -20,8 +21,12 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.grey[200],
         primarySwatch: Colors.teal,
       ),
-      home: ActiveTransactions(),
-      // home: const MyHomePage(title: 'Online Medical Order'),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const Dashboard(),
+        '/home': (context) => const MyHomePage(title: 'Online Medical Order'),
+        '/activeTransactions': (context) => const ActiveTransactions()
+      },
     );
   }
 }
