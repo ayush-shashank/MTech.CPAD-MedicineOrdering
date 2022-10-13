@@ -6,12 +6,12 @@ const productSchema = new Schema({
         required: true
     },
     weightInGrams: {
-        type: SchemaTypes.Decimal128,
+        type: Number,
         min: 0
 
     },
     price: {
-        type: SchemaTypes.Decimal128,
+        type: Number,
         required: true,
         min: 0
     },
