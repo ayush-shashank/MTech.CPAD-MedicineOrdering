@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:order_med/model/productModel.dart';
+import 'package:order_med/model/orderModel.dart';
 
-class ProductCard extends StatelessWidget {
-  final Product product;
+class OrderCard extends StatelessWidget {
+  final Order order;
 
-  const ProductCard({super.key, required this.product});
+  const OrderCard({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +27,15 @@ class ProductCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(product.name,
+                    Text(order.productId,
                         style: const TextStyle(
                             fontWeight: FontWeight.w700, fontSize: 16)),
                     Text(
-                      '${product.weightInGrams.toString()}g',
+                      order.customerId,
                       style: const TextStyle(fontStyle: FontStyle.italic),
                     ),
                     Text(
-                      '₹ ${product.price.toString()}',
+                      '₹ ${order.qty.toString()}',
                       style: const TextStyle(fontSize: 28),
                     )
                   ],
