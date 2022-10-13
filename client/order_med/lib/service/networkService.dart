@@ -1,4 +1,4 @@
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class Service {
   static String baseUrl = 'http://192.168.1.3:3000';
@@ -10,11 +10,11 @@ class Service {
       "Access-Control_Allow_Origin": "*"
     };
 
-    http.Response response;
+    Response response;
     if (body == null) {
-      response = await http.get(uri, headers: headers);
+      response = await get(uri, headers: headers);
     } else {
-      response = await http.post(uri, headers: headers, body: body);
+      response = await post(uri, headers: headers, body: body);
     }
 
     if (response.statusCode == 200) {
