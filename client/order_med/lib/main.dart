@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:order_med/service.dart';
+import 'package:order_med/pages/activeTransactions.dart';
+import 'package:order_med/model/product.dart';
+import 'package:order_med/service/networkService.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +20,8 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.grey[200],
         primarySwatch: Colors.teal,
       ),
-      home: const MyHomePage(title: 'Online Medical Order'),
+      home: ActiveTransactions(),
+      // home: const MyHomePage(title: 'Online Medical Order'),
     );
   }
 }
@@ -34,15 +39,29 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   String resVal = 'val';
 
-  void _incrementCounter() async {
-    String val = await Service.fetch('/');
+  @override
+  void initState() {
+    super.initState();
+    getProducts();
+  }
+
+  void getProducts() async {
+    String res = await Service.fetch('/product');
     // String val = await Service.fetch('/user/login', body: {
     //   "email": "gianni.hills@yahoo.com",
     //   "password": "4tKj8iA_zgj3h4g"
     // });
+    List li = jsonDecode(res) as List;
+    Iterable prodList = li.map((data) => Product.fromJson(data));
+    print(prodList);
+    setState(() {
+      resVal = 'prodList';
+    });
+  }
+
+  void _incrementCounter() async {
     setState(() {
       _counter++;
-      resVal = val;
     });
   }
 
