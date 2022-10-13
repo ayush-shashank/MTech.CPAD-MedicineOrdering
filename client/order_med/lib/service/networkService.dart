@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class Service {
-  static String baseUrl = 'http://localhost:3000';
+  static String baseUrl = 'http://192.168.1.3:3000';
 
   static Future<dynamic> fetch(String path, {Object? body}) async {
     final uri = Uri.parse("$baseUrl$path");
@@ -19,7 +19,6 @@ class Service {
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response, then parse the JSON.
-      print(response.body);
       return response.body;
     } else {
       // If the server did not return a 200 OK response,
