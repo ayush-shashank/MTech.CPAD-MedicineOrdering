@@ -21,6 +21,33 @@ class Product {
     required updatedAt,
   });
 
+  String get id => _id;
+  set id(String value) => _id = value;
+
+  get name => _name;
+  set name(value) => _name = value;
+
+  get weightInGrams => _weightInGrams;
+  set weightInGrams(value) => _weightInGrams = value;
+
+  get price => _price;
+  set price(value) => _price = value;
+
+  get quantityAvailable => _quantityAvailable;
+  set quantityAvailable(value) => _quantityAvailable = value;
+
+  get productImage => _productImage;
+  set productImage(value) => _productImage = value;
+
+  get doesRequirePrescription => _doesRequirePrescription;
+  set doesRequirePrescription(value) => _doesRequirePrescription = value;
+
+  get createdAt => _createdAt;
+  set createdAt(value) => _createdAt = value;
+
+  get updatedAt => _updatedAt;
+  set updatedAt(value) => _updatedAt = value;
+
   Product.fromJson(Map<String, dynamic> json) {
     _id = json['_id'];
     _name = json['_name'];
