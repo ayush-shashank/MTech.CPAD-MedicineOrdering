@@ -35,7 +35,7 @@ class OrderCard extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(order.productId,
+                        Text(order.productName,
                             style: const TextStyle(
                                 fontWeight: FontWeight.w700, fontSize: 16)),
                         Text(

@@ -1,14 +1,14 @@
 class Order {
-  late final String _id;
-  late final String _customerId;
-  late final String _productId;
-  late final String _productName;
-  late final int _quantity;
-  late final double _orderAmount;
-  late final bool _isActive;
-  late final List<dynamic> _prescription;
-  late final DateTime _createdAt;
-  late final DateTime _updatedAt;
+  String? _id;
+  String? _customerId;
+  String? _productId;
+  String? _productName;
+  int? _quantity;
+  double? _orderAmount;
+  bool? _isActive;
+  List<dynamic>? _prescription;
+  DateTime? _createdAt;
+  DateTime? _updatedAt;
 
   Order({
     id,
@@ -57,13 +57,13 @@ class Order {
     _id = json['_id'];
     _customerId = json['customerId'];
     _productId = json['productId'];
-    _productName = json['productName'];
-    _quantity = json['quantity'];
-    _orderAmount = json['orderAmount'];
+    _productName = json['productName'] ?? '';
+    _quantity = json['quantity'] ?? 0;
+    _orderAmount = json['orderAmount'] ?? 0;
     _isActive = json['isActive'];
     _prescription = List.castFrom<dynamic, dynamic>(json['prescription']);
-    _createdAt = DateTime.parse(json['createdAt']);
-    _updatedAt = DateTime.parse(json['updatedAt']);
+    _createdAt = DateTime.tryParse(json['createdAt']);
+    _updatedAt = DateTime.tryParse(json['updatedAt']);
   }
 
   Map<String, dynamic> toJson() {

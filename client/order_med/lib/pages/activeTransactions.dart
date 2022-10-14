@@ -1,10 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:order_med/model/orderModel.dart';
-import 'package:order_med/model/productModel.dart';
-import 'package:order_med/service/orderService.dart';
-import 'package:order_med/service/productService.dart';
-import 'package:order_med/widgets/orderCard.dart';
-import 'package:order_med/widgets/productCard.dart';
+import 'package:order_med/model/order_model.dart';
+import 'package:order_med/model/product_model.dart';
+import 'package:order_med/service/order_service.dart';
+import 'package:order_med/service/product_service.dart';
+import 'package:order_med/widgets/order_card.dart';
 
 class ActiveTransactions extends StatefulWidget {
   const ActiveTransactions({super.key});
@@ -22,15 +23,9 @@ class _ActiveTransactionsState extends State<ActiveTransactions> {
   }
 
   void getActiveTransactions() async {
-    List<Order> orderList = await OrderService().getActiveTransactions();
-    // List<Product> orderList = await ProductService().getAllProducts();
-    // String val = await Service.fetch('/user/login', body: {
-    //   "email": "gianni.hills@yahoo.com",
-    //   "password": "4tKj8iA_zgj3h4g"
-    // });
+    List<Order> orderList = await OrderService.instance.getActiveTransactions();
     List<Widget> widgetList =
         orderList.map((order) => OrderCard(order: order)).toList();
-    // orderList.map((order) => ProductCard(product: order)).toList();
     setState(() {
       orders = widgetList;
     });
@@ -39,20 +34,23 @@ class _ActiveTransactionsState extends State<ActiveTransactions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Dashboard"),
-      ),
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Center(
-              child: ListTile(
-                title: Text('Active Transactions'),
+        child: SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 8),
+              const Center(
+                  child: Text(
+                'Active Transactions',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              )),
+              const SizedBox(
+                height: 8,
               ),
-            ),
-            Column(children: orders)
-          ],
+              Column(children: orders)
+            ],
+          ),
         ),
       ),
     );

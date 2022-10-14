@@ -1,13 +1,13 @@
 class Product {
-  late final String _id;
-  late final String _name;
-  late final int _weightInGrams;
-  late final double _price;
-  late final int _quantityAvailable;
-  late final List<String> _productImage;
-  late final bool _doesRequirePrescription;
-  late final DateTime _createdAt;
-  late final DateTime _updatedAt;
+  String? _id;
+  String? _name;
+  int? _weightInGrams;
+  double? _price;
+  int? _quantityAvailable;
+  List<String>? _productImage;
+  bool? _doesRequirePrescription;
+  DateTime? _createdAt;
+  DateTime? _updatedAt;
 
   Product({
     required id,
@@ -21,8 +21,8 @@ class Product {
     required updatedAt,
   });
 
-  String get id => _id;
-  set id(String value) => _id = value;
+  String? get id => _id;
+  set id(String? value) => _id = value;
 
   get name => _name;
   set name(value) => _name = value;
@@ -50,14 +50,16 @@ class Product {
 
   Product.fromJson(Map<String, dynamic> json) {
     _id = json['_id'];
-    _name = json['_name'];
-    _weightInGrams = json['_weightInGrams'];
-    _price = json['_price'];
-    _quantityAvailable = json['_quantityAvailable'];
-    _productImage = List.castFrom<dynamic, String>(json['_productImage']);
-    _doesRequirePrescription = json['_doesRequirePrescription'];
-    _createdAt = DateTime.parse(json['_createdAt']);
-    _updatedAt = DateTime.parse(json['_updatedAt']);
+    _name = json['_name'] ?? '';
+    _weightInGrams = json['_weightInGrams'] ?? 0;
+    _price = json['_price'] ?? 0;
+    _quantityAvailable = json['_quantityAvailable'] ?? 0;
+    _productImage = List.castFrom<dynamic, String>(json['_productImage'] ?? []);
+    _doesRequirePrescription = json['_doesRequirePrescription'] ?? false;
+    _createdAt =
+        DateTime.tryParse(json['_createdAt'] ?? DateTime.now().toString());
+    _updatedAt =
+        DateTime.tryParse(json['_updatedAt'] ?? DateTime.now().toString());
   }
 
   Map<String, dynamic> toJson() {
@@ -69,8 +71,8 @@ class Product {
     _data['_quantityAvailable'] = _quantityAvailable;
     _data['_productImage'] = _productImage;
     _data['_doesRequirePrescription'] = _doesRequirePrescription;
-    _data['_createdAt'] = _createdAt.toIso8601String();
-    _data['_updatedAt'] = _updatedAt.toIso8601String();
+    _data['_createdAt'] = _createdAt?.toIso8601String();
+    _data['_updatedAt'] = _updatedAt?.toIso8601String();
     return _data;
   }
 }
