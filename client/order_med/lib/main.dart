@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:order_med/pages/activeTransactions.dart';
-import 'package:order_med/model/productModel.dart';
 import 'package:order_med/pages/dashboard.dart';
-import 'package:order_med/service/networkService.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,21 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    getProducts();
-  }
-
-  void getProducts() async {
-    String res = await Service.fetch('/product');
-    // String val = await Service.fetch('/user/login', body: {
-    //   "email": "gianni.hills@yahoo.com",
-    //   "password": "4tKj8iA_zgj3h4g"
-    // });
-    List li = jsonDecode(res) as List;
-    Iterable prodList = li.map((data) => Product.fromJson(data));
-    print(prodList);
-    setState(() {
-      resVal = 'prodList';
-    });
   }
 
   void _incrementCounter() async {
