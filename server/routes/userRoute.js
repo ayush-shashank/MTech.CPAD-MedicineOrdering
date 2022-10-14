@@ -55,7 +55,13 @@ user.post('/:id/orderMedicine', async (req, res) => {
         let productDoc = await productModel.findOneAndUpdate(condition, update, options);
         if (productDoc) {
             try {
-                let orderDoc = await new orderModel({ productId: productDoc._id, customerId: req.params.id, ...order }).save();
+                let orderDoc = await new orderModel({
+                    customerId: req.params.id,
+                    productId: productDoc._id,
+                    productName: productDoc.name,
+                    orderAmount: (productDoc.price * order.quantity),
+                    ...order
+                }).save();
                 await customerModel.findByIdAndUpdate(req.params.id, { $push: { orders: orderDoc._id } }, options)
                 res.json(orderDoc);
             } catch (err) {
