@@ -14,7 +14,7 @@ const customerSchema = new Schema({
         unique: [true, "Email ID already exists!"],
         match: [/\S+@\S+\.\S+/, "Email ID is invalid!"]
     },
-    phno: {
+    phoneNumber: {
         type: Number,
         validate: {
             validator: val => val.toString().length === 10,

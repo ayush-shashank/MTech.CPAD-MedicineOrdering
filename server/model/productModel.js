@@ -1,4 +1,4 @@
-const { Schema, default: mongoose, SchemaTypes } = require("mongoose");
+const { Schema, default: mongoose } = require("mongoose");
 
 const productSchema = new Schema({
     name: {
@@ -8,19 +8,19 @@ const productSchema = new Schema({
     weightInGrams: {
         type: Number,
         min: 0
-
     },
     price: {
         type: Number,
         required: true,
         min: 0
     },
-    qtyAvailable: {
+    quantityAvailable: {
         type: Number,
         required: true,
         min: 0
     },
-    doesPrescription: {
+    productImage: [{ type: String }],
+    doesRequirePrescription: {
         type: Boolean,
         default: false
     }

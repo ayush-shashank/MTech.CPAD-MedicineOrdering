@@ -9,16 +9,25 @@ const orderSchema = new Schema({
         type: SchemaTypes.ObjectId,
         required: true
     },
-    qty: {
+    productName: {
+        type: String,
+        required: true
+    },
+    quantity: {
         type: Number,
         required: true,
         min: 0
     },
-    prescription: [{ data: Buffer, contentType: String }],
+    orderAmount: {
+        type: Number,
+        required: true,
+        min: 0
+    },
     isActive: {
         type: Boolean,
         default: true
-    }
+    },
+    prescription: [{ data: Buffer, contentType: String }],
 }, { timestamps: true });
 
 const orderModel = mongoose.model("Order", orderSchema);
