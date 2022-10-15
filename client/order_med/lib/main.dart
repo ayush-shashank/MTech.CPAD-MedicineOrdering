@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:order_med/pages/activeTransactions.dart';
 import 'package:order_med/pages/dashboard.dart';
+import 'package:order_med/pages/login_page.dart';
 import 'package:order_med/pages/product.dart';
 
 void main() {
@@ -20,7 +21,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const Dashboard(),
+        '/': (context) => const LoginPage(),
+        '/dashboard': (context) => const Dashboard(),
+        '/orderMedicine': (context) => const Scaffold(),
         '/home': (context) => const MyHomePage(title: 'Online Medical Order'),
         '/product': (context) => const ProductPage(),
         '/activeTransactions': (context) => const ActiveTransactions()

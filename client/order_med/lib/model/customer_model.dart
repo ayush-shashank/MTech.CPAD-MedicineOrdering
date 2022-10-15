@@ -35,21 +35,21 @@ class Customer {
 
   Customer.fromJson(Map<String, dynamic> json) {
     _id = json['_id'];
-    _name = json['_name'];
-    _email = json['_email'];
-    _phoneNumber = json['_phoneNumber'];
-    _password = json['_password'];
-    _orders = List.castFrom<dynamic, String>(json['_orders']);
+    _name = json['name'];
+    _email = json['email'];
+    _phoneNumber = json['phoneNumber'];
+    _password = json['password'];
+    _orders = List.castFrom<dynamic, String>(json['orders']);
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['_id'] = _id;
-    _data['_name'] = _name;
-    _data['_email'] = _email;
-    _data['_phoneNumber'] = _phoneNumber;
-    _data['_password'] = _password;
-    _data['_orders'] = _orders;
-    return _data;
+    final data = <String, dynamic>{};
+    data['_id'] = _id;
+    data['name'] = _name;
+    data['email'] = _email;
+    data['phoneNumber'] = _phoneNumber;
+    data['password'] = _password;
+    data['orders'] = _orders;
+    return data;
   }
 }

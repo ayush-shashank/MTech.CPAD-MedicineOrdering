@@ -50,29 +50,29 @@ class Product {
 
   Product.fromJson(Map<String, dynamic> json) {
     _id = json['_id'];
-    _name = json['_name'] ?? '';
-    _weightInGrams = json['_weightInGrams'] ?? 0;
-    _price = json['_price'] ?? 0;
-    _quantityAvailable = json['_quantityAvailable'] ?? 0;
-    _productImage = List.castFrom<dynamic, String>(json['_productImage'] ?? []);
-    _doesRequirePrescription = json['_doesRequirePrescription'] ?? false;
+    _name = json['name'] ?? '';
+    _weightInGrams = json['weightInGrams'] ?? 0;
+    _price = json['price'] ?? 0;
+    _quantityAvailable = json['quantityAvailable'] ?? 0;
+    _productImage = List.castFrom<dynamic, String>(json['productImage'] ?? []);
+    _doesRequirePrescription = json['doesRequirePrescription'] ?? false;
     _createdAt =
-        DateTime.tryParse(json['_createdAt'] ?? DateTime.now().toString());
+        DateTime.tryParse(json['createdAt'] ?? DateTime.now().toString());
     _updatedAt =
-        DateTime.tryParse(json['_updatedAt'] ?? DateTime.now().toString());
+        DateTime.tryParse(json['updatedAt'] ?? DateTime.now().toString());
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['_id'] = _id;
-    _data['_name'] = _name;
-    _data['_weightInGrams'] = _weightInGrams;
-    _data['_price'] = _price;
-    _data['_quantityAvailable'] = _quantityAvailable;
-    _data['_productImage'] = _productImage;
-    _data['_doesRequirePrescription'] = _doesRequirePrescription;
-    _data['_createdAt'] = _createdAt?.toIso8601String();
-    _data['_updatedAt'] = _updatedAt?.toIso8601String();
-    return _data;
+    final data = <String, dynamic>{};
+    data['_id'] = _id;
+    data['name'] = _name;
+    data['weightInGrams'] = _weightInGrams;
+    data['price'] = _price;
+    data['quantityAvailable'] = _quantityAvailable;
+    data['productImage'] = _productImage;
+    data['doesRequirePrescription'] = _doesRequirePrescription;
+    data['createdAt'] = _createdAt?.toIso8601String();
+    data['updatedAt'] = _updatedAt?.toIso8601String();
+    return data;
   }
 }

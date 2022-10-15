@@ -17,23 +17,19 @@ class ProductPage extends StatelessWidget {
               fit: BoxFit.contain,
               height: 200,
             ),
-            Text('Product Name'),
-            Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Product Description'),
-                  Text('Weight'),
-                  Text('Presctiption Required?')
-                ],
-              ),
+            const Text('Product Name'),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text('Product Description'),
+                Text('Weight'),
+                Text('Prescription Required?')
+              ],
             )
           ],
         ),
       ),
-      drawer: Container(
-        child: ButtonBar(children: [Text('Add to cart')]),
-      ),
+      drawer: const ButtonBar(children: [Text('Add to cart')]),
     );
   }
 }

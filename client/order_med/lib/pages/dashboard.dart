@@ -9,17 +9,15 @@ class Dashboard extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Dashboard")),
       body: const ActiveTransactions(),
-      bottomNavigationBar: Container(
-        child: SizedBox(
-          width: 10,
-          child: Text('asbk'),
-        ),
+      bottomNavigationBar: const SizedBox(
+        width: 10,
+        child: Text('ask'),
       ),
       drawer: Container(
         alignment: Alignment.topLeft,
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         width: 600,
-        child: Column(children: [
+        child: Column(children: const [
           Text('Pages1'),
           Text('data Page 2'),
           Text('data'),
