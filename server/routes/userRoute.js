@@ -7,12 +7,14 @@ const user = express.Router();
 
 // Login User
 user.post("/login", async (req, res) => {
+    console.log("body", req.body);
     try {
         let customer = await customerModel.findOne({ ...req.body });
-        if (!customer)
-            res.send("Invalid Credentials!");
-        else
+        if (!customer) {
+            res.json({ error: "Invalid Credentials!" });
+        } else {
             res.json(customer);
+        }
     }
     catch (err) {
         console.error(err)
