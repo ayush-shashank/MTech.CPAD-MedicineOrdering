@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:order_med/pages/activeTransactions.dart';
 
-class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
