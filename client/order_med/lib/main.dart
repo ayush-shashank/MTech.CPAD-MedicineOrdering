@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:order_med/pages/activeTransactions.dart';
 import 'package:order_med/pages/dashboard.dart';
+import 'package:order_med/pages/product.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const Dashboard(),
         '/home': (context) => const MyHomePage(title: 'Online Medical Order'),
+        '/product': (context) => const ProductPage(),
         '/activeTransactions': (context) => const ActiveTransactions()
       },
     );

@@ -47,11 +47,11 @@ class Order {
   get prescription => _prescription;
   set prescription(value) => _prescription = value;
 
-  get createdAt => _createdAt;
-  set createdAt(value) => _createdAt = value;
+  DateTime? get createdAt => _createdAt;
+  set createdAt(DateTime? value) => _createdAt = value;
 
-  get updatedAt => _updatedAt;
-  set updatedAt(value) => _updatedAt = value;
+  DateTime? get updatedAt => _updatedAt;
+  set updatedAt(DateTime? value) => _updatedAt = value;
 
   Order.fromJson(Map<String, dynamic> json) {
     _id = json['_id'];

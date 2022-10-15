@@ -1,4 +1,5 @@
 import 'package:http/http.dart';
+import 'package:order_med/globals.dart' as globals;
 
 class NetworkService {
   static NetworkService? _instance;
@@ -9,7 +10,7 @@ class NetworkService {
     return _instance!;
   }
 
-  static String baseUrl = 'http://192.168.1.3:3000';
+  static String baseUrl = globals.baseUrl;
 
   static Future<dynamic> fetch(String path, {Object? body}) async {
     final uri = Uri.parse("$baseUrl$path");

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:order_med/model/order_model.dart';
+import 'package:order_med/globals.dart' as globals;
 
 class OrderCard extends StatelessWidget {
   final Order order;
@@ -13,21 +14,36 @@ class OrderCard extends StatelessWidget {
         child: Padding(
             padding: const EdgeInsets.fromLTRB(8, 2, 8, 8),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  'Order ID: ${order.id}',
-                  style:
-                      const TextStyle(fontStyle: FontStyle.italic, fontSize: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Order # ${order.id}',
+                      style: const TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
                 ),
                 Row(
                   children: [
                     Column(children: [
                       Image.network(
-                        'https://images.newscientist.com/wp-content/uploads/2019/06/18153152/medicineshutterstock_1421041688.jpg',
-                        fit: BoxFit.fill,
-                        height: 60,
-                      )
+                          '${globals.baseUrl}/assets/img/${order.productId}/0.jpg',
+                          fit: BoxFit.contain,
+                          height: 100,
+                          width: 100,
+                          errorBuilder: (BuildContext context, Object exception,
+                                  StackTrace? stackTrace) =>
+                              const Center(
+                                child: Icon(
+                                  Icons.warning_amber_rounded,
+                                  size: 100,
+                                  color: Colors.amber,
+                                ),
+                              ))
                     ]),
                     const SizedBox(
                       width: 8,
@@ -39,7 +55,7 @@ class OrderCard extends StatelessWidget {
                             style: const TextStyle(
                                 fontWeight: FontWeight.w700, fontSize: 16)),
                         Text(
-                          order.id!,
+                          order.updatedAt.toString(),
                           style: const TextStyle(fontStyle: FontStyle.italic),
                         ),
                         Text(
@@ -53,7 +69,7 @@ class OrderCard extends StatelessWidget {
               ],
             )),
       ),
-      onTap: () => Navigator.pushNamed(context, '/home'),
+      onTap: () => Navigator.pushNamed(context, '/product'),
     );
   }
 }

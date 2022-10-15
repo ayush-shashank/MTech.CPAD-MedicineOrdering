@@ -36,21 +36,19 @@ class _ActiveTransactionsState extends State<ActiveTransactions> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(height: 8),
-              const Center(
-                  child: Text(
-                'Active Transactions',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              )),
-              const SizedBox(
-                height: 8,
-              ),
-              Column(children: orders)
-            ],
-          ),
+        child: Column(
+          children: [
+            const SizedBox(height: 8),
+            const Center(
+                child: Text(
+              'Active Transactions',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )),
+            const SizedBox(
+              height: 8,
+            ),
+            Column(children: orders)
+          ],
         ),
       ),
     );
