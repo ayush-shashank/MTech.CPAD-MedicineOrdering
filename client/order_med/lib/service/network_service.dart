@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart';
 import 'package:order_med/globals.dart' as globals;
 
@@ -14,18 +16,18 @@ class NetworkService {
 
   static Future<dynamic> fetch(String path, {Object? body}) async {
     final uri = Uri.parse("$baseUrl$path");
-    var headers = {
+    var headers = <String, String>{
       "Accept": "application/json",
-      "Access-Control_Allow_Origin": "*"
+      "Access-Control_Allow_Origin": "*",
+      'Content-Type': 'application/json; charset=UTF-8'
     };
-
     Response response;
     if (body == null) {
       print('GET  \t $uri');
       response = await get(uri, headers: headers);
     } else {
       print('POST  \t $uri');
-      response = await post(uri, headers: headers, body: body);
+      response = await post(uri, headers: headers, body: jsonEncode(body));
     }
 
     if (response.statusCode == 200) {
