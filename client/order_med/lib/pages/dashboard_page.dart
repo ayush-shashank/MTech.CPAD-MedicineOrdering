@@ -1,7 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:order_med/pages/activeTransactions.dart';
+import 'package:order_med/widgets/active_transactions.dart';
+import 'package:order_med/service/auth_service.dart';
 import 'package:order_med/widgets/nav_row.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -25,15 +26,14 @@ class DashboardPage extends StatelessWidget {
                         content: const Text('Are you sure you want to logout?'),
                         actions: [
                           TextButton(
-                              child: const Text("Yes"), onPressed: () {}),
+                              child: const Text("Yes"),
+                              onPressed: () => AuthService().logout(context)),
                           TextButton(
                               child: const Text(
                                 "No",
                                 style: TextStyle(color: Colors.redAccent),
                               ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              })
+                              onPressed: () => Navigator.of(context).pop())
                         ],
                       ),
                     );
@@ -47,6 +47,7 @@ class DashboardPage extends StatelessWidget {
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: const [
               NavRow(),
               ActiveTransactions(),
@@ -55,14 +56,3 @@ class DashboardPage extends StatelessWidget {
         ));
   }
 }
-
-// Column(
-//         children: [
-//           const Text("Dashboard Body"),
-//           IconButton(
-//               onPressed: () {
-//                 Navigator.pushNamed(context, '/activeTransactions');
-//               },
-//               icon: const Icon(Icons.edit_location)),
-//         ],
-//       ),
