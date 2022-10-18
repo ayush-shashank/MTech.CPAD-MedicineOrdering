@@ -1,6 +1,5 @@
-import 'package:order_med/globals.dart' as globals;
 import 'package:flutter/material.dart';
-import 'package:order_med/service/customer_service.dart';
+import 'package:order_med/service/auth_service.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -21,32 +20,6 @@ class LoginFormState extends State<LoginForm> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
-  }
-
-  SnackBar failure = SnackBar(
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.red[600],
-      duration: const Duration(milliseconds: 1250),
-      content: const Text('Invalid Credentials!'));
-  SnackBar success = SnackBar(
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.green[600],
-      duration: const Duration(milliseconds: 1250),
-      content: const Text('Successfully Logged In!'));
-
-  void onLogin() async {
-    if (_formKey.currentState!.validate()) {
-      CustomerService.instance
-          .login(email: emailController.text, password: passwordController.text)
-          .then((user) {
-        globals.isLoggedIn = true;
-        globals.userId = user.id;
-        Navigator.pushNamed(context, '/dashboard');
-        ScaffoldMessenger.of(context).showSnackBar(success);
-      }).catchError((err) {
-        ScaffoldMessenger.of(context).showSnackBar(failure);
-      });
-    }
   }
 
   String? emailValidator(String? value) {
@@ -102,7 +75,12 @@ class LoginFormState extends State<LoginForm> {
             width: 250,
             margin: const EdgeInsets.only(top: 20),
             child: ElevatedButton(
-              onPressed: onLogin,
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  AuthService().login(
+                      context, emailController.text, passwordController.text);
+                }
+              },
               child: const Text(
                 'Login',
                 style: TextStyle(
