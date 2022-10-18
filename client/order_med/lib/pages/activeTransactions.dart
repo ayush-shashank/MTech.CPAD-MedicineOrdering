@@ -31,24 +31,19 @@ class _ActiveTransactionsState extends State<ActiveTransactions> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 8),
-            const Center(
-                child: Text(
-              'Active Transactions',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            )),
-            const SizedBox(
-              height: 8,
-            ),
-            orders
-          ],
+    return Column(
+      children: [
+        const SizedBox(height: 8),
+        const Center(
+            child: Text(
+          'Active Transactions',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        )),
+        const SizedBox(
+          height: 8,
         ),
-      ),
+        orders
+      ],
     );
   }
 }
