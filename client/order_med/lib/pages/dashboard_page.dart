@@ -7,12 +7,23 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Dashboard")),
+      appBar: AppBar(title: const Text("Dashboard"), actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 20),
+          child: IconButton(
+            onPressed: () {
+              print('logout');
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        )
+      ]),
       body: const ActiveTransactions(),
-      bottomNavigationBar: const SizedBox(
-        width: 10,
-        child: Text('ask'),
-      ),
+      // bottomNavigationBar: const SizedBox(
+      //   width: 10,
+      //   child: Text('ask'),
+      // ),
+
       drawer: Container(
         alignment: Alignment.topLeft,
         padding: const EdgeInsets.all(12),

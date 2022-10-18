@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:order_med/pages/activeTransactions.dart';
 import 'package:order_med/pages/dashboard_page.dart';
 import 'package:order_med/pages/login_page.dart';
 import 'package:order_med/pages/product.dart';
+import 'package:order_med/service/network_service.dart';
+import 'package:order_med/globals.dart' as globals;
 
 void main() {
   runApp(const MyApp());
@@ -10,6 +13,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const LoginPage(),
+        '/': (context) => const MyHomePage(title: 'Online Medical Order'),
+        '/login': (context) => const LoginPage(),
         '/dashboard': (context) => const DashboardPage(),
         '/orderMedicine': (context) => const Scaffold(),
         '/home': (context) => const MyHomePage(title: 'Online Medical Order'),
@@ -48,6 +53,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    NetworkService.setBaseAddress();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (globals.isLoggedIn) {
+        print('isLoggedIn');
+        Navigator.pushNamed(context, '/dashboard');
+      } else {
+        print('isNotLoggedIn');
+        Navigator.pushNamed(context, '/login');
+      }
+    });
   }
 
   void _incrementCounter() async {

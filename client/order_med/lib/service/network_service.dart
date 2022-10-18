@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart';
 import 'package:order_med/globals.dart' as globals;
@@ -12,10 +13,24 @@ class NetworkService {
     return _instance!;
   }
 
-  static String baseUrl = globals.baseUrl;
+  String baseUrl = setBaseAddress();
+
+  static Future<String> getIPAddress() async {
+    return (await NetworkInterface.list())
+        .singleWhere((interface) => interface.name == 'WiFi')
+        .addresses
+        .singleWhere((address) => address.type == InternetAddressType.IPv4)
+        .address;
+  }
+
+  static setBaseAddress() async {
+    String ip = await getIPAddress();
+    globals.baseUrl = 'http://$ip:3000';
+    return globals.baseUrl;
+  }
 
   static Future<dynamic> fetch(String path, {Object? body}) async {
-    final uri = Uri.parse("$baseUrl$path");
+    final uri = Uri.parse(globals.baseUrl + path);
     var headers = <String, String>{
       "Accept": "application/json",
       "Access-Control_Allow_Origin": "*",
