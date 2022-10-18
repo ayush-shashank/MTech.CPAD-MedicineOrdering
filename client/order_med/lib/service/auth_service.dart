@@ -15,7 +15,6 @@ class AuthService {
       content: const Text('Successfully Logged In!'));
 
   void login(BuildContext context, String email, String password) async {
-    print(globals.baseUrl);
     CustomerService.instance
         .login(email: email, password: password)
         .then((user) {
@@ -26,5 +25,15 @@ class AuthService {
     }).catchError((err) {
       ScaffoldMessenger.of(context).showSnackBar(failure);
     });
+  }
+
+  void logout(BuildContext context) {
+    globals.isLoggedIn = false;
+    globals.userId = '';
+    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+  }
+
+  Future<bool> checkAuth() async {
+    return globals.isLoggedIn;
   }
 }
