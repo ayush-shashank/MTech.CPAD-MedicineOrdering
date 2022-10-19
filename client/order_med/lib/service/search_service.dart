@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MedicineSearchDelegate extends SearchDelegate {
+class ProductSearchDelegate extends SearchDelegate {
   // Demo list to show querying
   List<String> searchTerms = [
     "Apple",
@@ -13,7 +13,6 @@ class MedicineSearchDelegate extends SearchDelegate {
     "Strawberries"
   ];
 
-  // first overwrite to
   // clear the search text
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -27,7 +26,7 @@ class MedicineSearchDelegate extends SearchDelegate {
     ];
   }
 
-  // second overwrite to pop out of search menu
+  // pop out of search menu
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
@@ -38,7 +37,7 @@ class MedicineSearchDelegate extends SearchDelegate {
     );
   }
 
-  // third overwrite to show query result
+  // show query result
   @override
   Widget buildResults(BuildContext context) {
     List<String> matchQuery = [];
@@ -58,7 +57,6 @@ class MedicineSearchDelegate extends SearchDelegate {
     );
   }
 
-  // last overwrite to show the
   // querying process at the runtime
   @override
   Widget buildSuggestions(BuildContext context) {
