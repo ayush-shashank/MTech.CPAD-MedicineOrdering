@@ -24,8 +24,8 @@ class Product {
   String? get id => _id;
   set id(String? value) => _id = value;
 
-  get name => _name;
-  set name(value) => _name = value;
+  String get name => _name ?? '';
+  set name(String value) => _name = value;
 
   get weightInGrams => _weightInGrams;
   set weightInGrams(value) => _weightInGrams = value;
@@ -36,8 +36,8 @@ class Product {
   get quantityAvailable => _quantityAvailable;
   set quantityAvailable(value) => _quantityAvailable = value;
 
-  get productImage => _productImage;
-  set productImage(value) => _productImage = value;
+  List<String> get productImage => _productImage ?? [];
+  set productImage(List<String> value) => _productImage = value;
 
   get doesRequirePrescription => _doesRequirePrescription;
   set doesRequirePrescription(value) => _doesRequirePrescription = value;

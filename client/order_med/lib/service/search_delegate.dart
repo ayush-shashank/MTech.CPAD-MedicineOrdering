@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:order_med/model/product_model.dart';
+import 'package:order_med/widgets/search_card.dart';
 
 class ProductSearchDelegate extends SearchDelegate {
-  // Demo list to show querying
-  List<String> searchTerms = [
-    "Apple",
-    "Banana",
-    "Mango",
-    "Pear",
-    "Watermelons",
-    "Blueberries",
-    "Pineapples",
-    "Strawberries"
-  ];
+  List<Product> searchTerms;
+  ProductSearchDelegate(this.searchTerms);
 
   // clear the search text
   @override
@@ -40,19 +33,17 @@ class ProductSearchDelegate extends SearchDelegate {
   // show query result
   @override
   Widget buildResults(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
+    List<Product> matchQuery = [];
+    for (var product in searchTerms) {
+      if (product.name.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(product);
       }
     }
     return ListView.builder(
       itemCount: matchQuery.length,
       itemBuilder: (context, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          title: Text(result),
-        );
+        Product result = matchQuery[index];
+        return SearchCard(product: result);
       },
     );
   }
@@ -60,22 +51,17 @@ class ProductSearchDelegate extends SearchDelegate {
   // querying process at the runtime
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var fruit in searchTerms) {
-      if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
+    List<Product> matchQuery = [];
+    for (var product in searchTerms) {
+      if (product.name.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(product);
       }
     }
     return ListView.builder(
       itemCount: matchQuery.length,
       itemBuilder: (context, index) {
-        var result = matchQuery[index];
-        return ListTile(
-          onTap: () {
-            print(result);
-          },
-          title: Text(result),
-        );
+        Product result = matchQuery[index];
+        return SearchCard(product: result);
       },
     );
   }
