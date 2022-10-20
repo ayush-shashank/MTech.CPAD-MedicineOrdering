@@ -5,6 +5,8 @@ import 'package:order_med/service/search_delegate.dart';
 import 'package:order_med/widgets/latest_transactions.dart';
 
 class OrderMedicinePage extends StatelessWidget {
+  static const String routeName = '/orderMedicine';
+
   const OrderMedicinePage({super.key});
 
   @override

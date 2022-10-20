@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class UnderConstruction extends StatelessWidget {
+  static const String routeName = '/404';
+
   const UnderConstruction({super.key});
 
   @override

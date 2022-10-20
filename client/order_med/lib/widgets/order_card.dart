@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:order_med/model/order_model.dart';
+import 'package:order_med/pages/product_page.dart';
 import 'package:order_med/globals.dart' as globals;
 
 class OrderCard extends StatelessWidget {
@@ -10,7 +11,8 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, '/product'),
+      onTap: () => Navigator.pushNamed(context, ProductPage.routeName,
+          arguments: order.productId),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),

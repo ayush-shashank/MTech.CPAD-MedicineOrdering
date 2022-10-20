@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:order_med/widgets/login_form.dart';
 
 class LoginPage extends StatelessWidget {
+  static const String routeName = '/login';
+
   const LoginPage({super.key});
 
   @override

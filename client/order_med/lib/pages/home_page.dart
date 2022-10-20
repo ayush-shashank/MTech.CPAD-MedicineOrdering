@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:order_med/pages/dashboard_page.dart';
 import 'package:order_med/pages/login_page.dart';
 import 'package:order_med/service/auth_service.dart';
 import 'package:order_med/service/network_service.dart';
-import 'package:order_med/globals.dart' as globals;
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
+  static const String routeName = '/';
   final String title;
+
+  const HomePage({super.key, required this.title});
 
   @override
   State<HomePage> createState() => _HomePageState();

@@ -6,6 +6,8 @@ import 'package:order_med/service/auth_service.dart';
 import 'package:order_med/widgets/nav_row.dart';
 
 class DashboardPage extends StatelessWidget {
+  static const String routeName = '/dashboard';
+
   const DashboardPage({super.key});
 
   @override
@@ -47,6 +49,7 @@ class DashboardPage extends StatelessWidget {
         resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: const [
               NavRow(),

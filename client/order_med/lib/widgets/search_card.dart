@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:order_med/model/product_model.dart';
 import 'package:order_med/globals.dart' as globals;
+import 'package:order_med/pages/product_page.dart';
 
 class SearchCard extends StatelessWidget {
   final Product product;
@@ -10,7 +11,8 @@ class SearchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (() => print('object')),
+      onTap: (() => Navigator.of(context)
+          .pushNamed(ProductPage.routeName, arguments: product.id)),
       child: Card(
         child: Container(
           margin: const EdgeInsets.all(0),
