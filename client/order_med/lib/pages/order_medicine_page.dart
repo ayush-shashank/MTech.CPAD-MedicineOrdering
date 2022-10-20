@@ -13,10 +13,12 @@ class OrderMedicinePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Order Medicine'),
+          title: const Text(
+            'Order Medicine',
+          ),
           actions: [
             Padding(
-              padding: const EdgeInsets.only(right: 20),
+              padding: const EdgeInsets.only(right: 5),
               child: IconButton(
                 tooltip: 'Search Medicines',
                 icon: const Icon(Icons.search),
@@ -27,6 +29,14 @@ class OrderMedicinePage extends StatelessWidget {
                       context: context,
                       delegate: ProductSearchDelegate(products));
                 },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 5.0),
+              child: IconButton(
+                tooltip: 'Cart',
+                icon: const Icon(Icons.shopping_cart),
+                onPressed: () {},
               ),
             )
           ],
