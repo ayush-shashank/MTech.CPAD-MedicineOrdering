@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:order_med/model/product_model.dart';
-import 'package:order_med/widgets/search_card.dart';
+import 'package:order_med/widgets/search_tile.dart';
 
 class ProductSearchDelegate extends SearchDelegate {
   List<Product> searchTerms;
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  final Tween<Offset> _offset =
+      Tween(begin: const Offset(1, 0), end: const Offset(0, 0));
+
   ProductSearchDelegate(this.searchTerms);
 
   // clear the search text
@@ -57,11 +61,13 @@ class ProductSearchDelegate extends SearchDelegate {
         matchQuery.add(product);
       }
     }
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context, index) {
-        Product result = matchQuery[index];
-        return SearchCard(product: result);
+    return AnimatedList(
+      key: _listKey,
+      initialItemCount: matchQuery.length,
+      itemBuilder: (context, index, animation) {
+        return SlideTransition(
+            position: animation.drive(_offset),
+            child: SearchCard(product: matchQuery[index]));
       },
     );
   }
