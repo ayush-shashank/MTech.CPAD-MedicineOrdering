@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:order_med/pages/cart_page.dart';
 import 'package:order_med/pages/dashboard_page.dart';
 import 'package:order_med/pages/home_page.dart';
 import 'package:order_med/pages/login_page.dart';
@@ -12,6 +13,7 @@ class RouterService {
     const String loginRoute = LoginPage.routeName;
     const String dashboardRoute = DashboardPage.routeName;
     const String orderMedicineRoute = OrderMedicinePage.routeName;
+    const String cartPageRoute = CartPage.routeName;
     const String productRoute = ProductPage.routeName;
     const String underConstructionRoute = UnderConstruction.routeName;
 
@@ -25,6 +27,8 @@ class RouterService {
         return MaterialPageRoute(builder: (_) => const DashboardPage());
       case orderMedicineRoute:
         return MaterialPageRoute(builder: (_) => const OrderMedicinePage());
+      case cartPageRoute:
+        return MaterialPageRoute(builder: (_) => const CartPage());
       case productRoute:
         String productId = settings.arguments as String;
         return MaterialPageRoute(
