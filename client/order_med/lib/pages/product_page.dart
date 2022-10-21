@@ -25,13 +25,22 @@ class _ProductPageState extends State<ProductPage> {
 
   setProductImages() => ClipRRect(
           child: Hero(
+        transitionOnUserGestures: true,
         tag: 'location-img-${product.id}',
         child: Image.network(
-          '${globals.baseUrl}/assets/img/${product.id}/0.jpg',
-          // height: 240,
-          fit: BoxFit.contain,
-          alignment: Alignment.topCenter,
-        ),
+            '${globals.baseUrl}/assets/img/${product.id}/0.jpg',
+            // height: 240,
+            fit: BoxFit.contain,
+            alignment: Alignment.topCenter,
+            errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) =>
+                const Center(
+                  child: Icon(
+                    Icons.warning_amber_rounded,
+                    size: 100,
+                    color: Colors.amber,
+                  ),
+                )),
       ));
 
   setProductName() => Container(
@@ -49,22 +58,18 @@ class _ProductPageState extends State<ProductPage> {
         // shape: const RoundedRectangleBorder(
         //     borderRadius: BorderRadius.all(Radius.circular(10))),
         children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                        'Prescription Required? - ${product.doesRequirePrescription ? "Yes" : "No"}'),
-                    const Text('Product Description'),
-                    Text('In Stock: ${product.quantityAvailable}'),
-                    Text('Weight: ${product.weightInGrams}g'),
-                  ],
-                ),
-              ),
+          Container(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                    'Prescription Required? - ${product.doesRequirePrescription ? "Yes" : "No"}'),
+                const Text('Product Description'),
+                Text('In Stock: ${product.quantityAvailable}'),
+                Text('Weight: ${product.weightInGrams}g'),
+              ],
             ),
           )
         ],
@@ -73,7 +78,9 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         title: const Text('Product Detail'),
         actions: [
           Padding(

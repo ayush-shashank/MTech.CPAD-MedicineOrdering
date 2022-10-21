@@ -46,7 +46,6 @@ class DashboardPage extends StatelessWidget {
             ),
           )
         ]),
-        resizeToAvoidBottomInset: true,
         body: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,

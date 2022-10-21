@@ -16,10 +16,18 @@ class ProductCard extends StatelessWidget {
               children: [
                 Column(children: [
                   Image.network(
-                    'https://images.newscientist.com/wp-content/uploads/2019/06/18153152/medicineshutterstock_1421041688.jpg',
-                    fit: BoxFit.fill,
-                    height: 60,
-                  )
+                      'https://images.newscientist.com/wp-content/uploads/2019/06/18153152/medicineshutterstock_1421041688.jpg',
+                      fit: BoxFit.fill,
+                      height: 60,
+                      errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrace) =>
+                          const Center(
+                            child: Icon(
+                              Icons.warning_amber_rounded,
+                              size: 100,
+                              color: Colors.amber,
+                            ),
+                          ))
                 ]),
                 const SizedBox(
                   width: 8,

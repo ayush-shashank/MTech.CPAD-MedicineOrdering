@@ -21,10 +21,14 @@ class _LatestTransactionsState extends State<LatestTransactions> {
   void getLatestTransactions() async {
     List<Order> orderList = await OrderService.instance.getLatestTransactions();
     if (orderList.isNotEmpty) {
-      List<Widget> widgetList =
-          orderList.map((order) => OrderCard(order: order)).toList();
       setState(() {
-        orders = Column(children: widgetList);
+        orders = ListView.builder(
+          shrinkWrap: true,
+          itemCount: orderList.length,
+          itemBuilder: (context, index) {
+            return OrderCard(order: orderList[index]);
+          },
+        );
       });
     }
   }

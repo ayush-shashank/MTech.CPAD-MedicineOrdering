@@ -21,10 +21,15 @@ class _ActiveTransactionsState extends State<ActiveTransactions> {
   void getActiveTransactions() async {
     List<Order> orderList = await OrderService.instance.getActiveTransactions();
     if (orderList.isNotEmpty) {
-      List<Widget> widgetList =
-          orderList.map((order) => OrderCard(order: order)).toList();
       setState(() {
-        orders = Column(children: widgetList);
+        orders = ListView.builder(
+          // physics: const AlwaysScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: orderList.length,
+          itemBuilder: (context, index) {
+            return OrderCard(order: orderList[index]);
+          },
+        );
       });
     }
   }
