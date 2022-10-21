@@ -31,17 +31,18 @@ class SearchTile extends StatelessWidget {
           transitionOnUserGestures: true,
           tag: 'location-img-${product.id}',
           child: Image.network(
-              '${globals.baseUrl}/assets/img/${product.id}/0.jpg',
-              height: 50.0,
-              // width: 50.0,
-              // fit: BoxFit.contain,
-              errorBuilder: (BuildContext context, Object exception,
-                      StackTrace? stackTrace) =>
-                  const Icon(
-                    Icons.warning_amber_rounded,
-                    size: 100,
-                    color: Colors.amber,
-                  )),
+            '${globals.baseUrl}/assets/img/${product.id}/0.jpg',
+            height: 50.0,
+            width: 50.0,
+            fit: BoxFit.cover,
+            errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) =>
+                const Icon(
+              Icons.warning_amber_rounded,
+              size: 50,
+              color: Colors.amber,
+            ),
+          ),
         ),
       ),
       trailing: Text('₹${product.price}'),

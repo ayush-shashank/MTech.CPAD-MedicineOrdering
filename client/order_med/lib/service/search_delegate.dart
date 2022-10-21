@@ -4,10 +4,6 @@ import 'package:order_med/widgets/search_tile.dart';
 
 class ProductSearchDelegate extends SearchDelegate {
   List<Product> searchTerms;
-  GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  Tween<Offset> _offset =
-      Tween(begin: const Offset(1, 0), end: const Offset(0, 0));
-
   ProductSearchDelegate(this.searchTerms);
 
   // clear the search text
@@ -43,14 +39,10 @@ class ProductSearchDelegate extends SearchDelegate {
         matchQuery.add(product);
       }
     }
-    return AnimatedList(
-      key: _listKey,
-      initialItemCount: matchQuery.length,
-      itemBuilder: (context, index, animation) {
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context, index) {
         return SearchTile(product: matchQuery[index]);
-        // return SlideTransition(
-        //     position: animation.drive(_offset),
-        //     child: SearchTile(product: matchQuery[index]));
       },
     );
   }
@@ -64,15 +56,10 @@ class ProductSearchDelegate extends SearchDelegate {
         matchQuery.add(product);
       }
     }
-    return AnimatedList(
-      key: _listKey,
-      shrinkWrap: true,
-      initialItemCount: matchQuery.length,
-      itemBuilder: (context, index, animation) {
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context, index) {
         return SearchTile(product: matchQuery[index]);
-        //   return SlideTransition(
-        //       position: animation.drive(_offset),
-        //       child: SearchTile(product: matchQuery[index]));
       },
     );
   }
