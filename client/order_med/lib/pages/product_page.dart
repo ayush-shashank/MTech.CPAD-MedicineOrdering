@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:order_med/model/cart_model.dart';
 import 'package:order_med/model/product_model.dart';
 import 'package:order_med/globals.dart' as globals;
 import 'package:order_med/service/product_service.dart';
+import 'package:order_med/widgets/cart_button.dart';
 
 class ProductPage extends StatefulWidget {
   static const String routeName = '/product';
@@ -42,7 +44,6 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                 )),
       ));
-
   setProductName() => Container(
         padding: const EdgeInsets.all(8),
         child: Text(
@@ -74,62 +75,79 @@ class _ProductPageState extends State<ProductPage> {
           )
         ],
       );
+  // Widget _shoppingCartBadge() {
+  //   return Badge(
+  //     position: BadgePosition.topEnd(top: 0, end: 3),
+  //     animationDuration: const Duration(milliseconds: 300),
+  //     animationType: BadgeAnimationType.slide,
+  //     badgeContent: Text(
+  //       globals.cart.orders.length.toString(),
+  //       style: const TextStyle(color: Colors.white),
+  //     ),
+  //     child:
+  //         IconButton(icon: const Icon(Icons.shopping_cart), onPressed: () {}),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: const Text('Product Detail'),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 5.0),
-            child: IconButton(
-                tooltip: 'Cart',
-                onPressed: () {},
-                icon: const Icon(Icons.shopping_cart)),
-          )
-        ],
-      ),
-      body: FutureBuilder(
-          future: getProduct(productId),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Container();
-            }
-            if (snapshot.hasData) {
-              product = snapshot.data!;
-              return Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    setProductImages(),
-                    setProductName(),
-                    setProductDetails()
-                  ],
-                ),
-              );
-            }
-            return const Center(
-              child: Text('Loading...'),
-            );
-          }),
-      persistentFooterButtons: [
-        Center(
-          child: Card(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20))),
-            child: ElevatedButton(
-              onPressed: () {},
-              child: const Padding(
-                padding: EdgeInsets.all(4),
-                child: Text('Add to cart'),
+    return FutureBuilder(
+        future: getProduct(productId),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Container();
+          }
+          if (snapshot.hasData) {
+            product = snapshot.data!;
+            return Scaffold(
+              extendBodyBehindAppBar: true,
+              appBar: AppBar(
+                  title: const Text(
+                    'Product Detail',
+                    style: TextStyle(shadows: [
+                      Shadow(offset: Offset(2, 2), blurRadius: 2.5)
+                    ]),
+                  ),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  actions: const [CartButton()],
+                  iconTheme: const IconThemeData(color: Colors.white, shadows: [
+                    Shadow(offset: Offset(2, 2), blurRadius: 2.5)
+                  ])),
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  setProductImages(),
+                  setProductName(),
+                  setProductDetails()
+                ],
               ),
-            ),
-          ),
-        )
-      ],
-    );
+              persistentFooterButtons: [
+                Center(
+                  child: Card(
+                    child: ElevatedButton(
+                      onPressed: (product.quantityAvailable > 0)
+                          ? () {
+                              print("Added to cart");
+                              setState(() {
+                                globals.cart.orders
+                                    .add(ProductQuantity(product, 1));
+                              });
+                            }
+                          : null,
+                      child: const Padding(
+                        padding: EdgeInsets.all(4),
+                        child: Text('Add to cart'),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            );
+          }
+          return const Center(
+            child: Text('Loading Product Details...'),
+          );
+        });
   }
 }

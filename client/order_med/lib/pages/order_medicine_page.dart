@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:order_med/model/product_model.dart';
 import 'package:order_med/service/product_service.dart';
 import 'package:order_med/service/search_delegate.dart';
+import 'package:order_med/widgets/cart_button.dart';
 import 'package:order_med/widgets/latest_transactions.dart';
 
 class OrderMedicinePage extends StatelessWidget {
@@ -31,14 +32,7 @@ class OrderMedicinePage extends StatelessWidget {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 5.0),
-              child: IconButton(
-                tooltip: 'Cart',
-                icon: const Icon(Icons.shopping_cart),
-                onPressed: () {},
-              ),
-            )
+            const CartButton()
           ],
         ),
         body: SingleChildScrollView(
