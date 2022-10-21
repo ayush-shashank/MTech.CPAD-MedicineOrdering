@@ -13,6 +13,7 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Login"),
       ),
+      resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

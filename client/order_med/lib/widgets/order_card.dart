@@ -52,19 +52,24 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Expanded(
                         flex: 1,
-                        child: Image.network(
-                            '${globals.baseUrl}/assets/img/${order.productId}/0.jpg',
-                            fit: BoxFit.contain,
-                            semanticLabel: 'Image',
-                            errorBuilder: (BuildContext context,
-                                    Object exception, StackTrace? stackTrace) =>
-                                const Center(
-                                  child: Icon(
-                                    Icons.warning_amber_rounded,
-                                    size: 100,
-                                    color: Colors.amber,
-                                  ),
-                                ))),
+                        child: Hero(
+                          transitionOnUserGestures: true,
+                          tag: 'location-img-${order.productId}',
+                          child: Image.network(
+                              '${globals.baseUrl}/assets/img/${order.productId}/0.jpg',
+                              fit: BoxFit.contain,
+                              semanticLabel: 'Image',
+                              errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) =>
+                                  const Center(
+                                    child: Icon(
+                                      Icons.warning_amber_rounded,
+                                      size: 75,
+                                      color: Colors.amber,
+                                    ),
+                                  )),
+                        )),
                     const SizedBox(
                       width: 8,
                       height: 8,
