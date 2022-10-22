@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:order_med/pages/under_construction.dart';
 
 class NavRow extends StatelessWidget {
   const NavRow({super.key});
@@ -10,25 +9,26 @@ class NavRow extends StatelessWidget {
       padding: const EdgeInsets.only(top: 24, bottom: 16),
       child: Row(children: [
         Expanded(
-          child: InkWell(
-            onTap: () => Navigator.of(context).pushNamed('/404'),
-            child: const Card(
-                color: Colors.grey,
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'Book Doctor Appointment',
-                    textAlign: TextAlign.center,
-                  ),
-                )),
+          child: Card(
+            color: Colors.grey,
+            child: InkWell(
+              onTap: () => Navigator.of(context).pushNamed('/404'),
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Book Doctor Appointment',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
           ),
         ),
         Expanded(
-            child: InkWell(
-          onTap: () => Navigator.of(context).pushNamed('/orderMedicine'),
-          child: const Card(
-            color: Colors.lightGreen,
-            child: Padding(
+            child: Card(
+          color: Colors.lightGreen,
+          child: InkWell(
+            onTap: () => Navigator.of(context).pushNamed('/orderMedicine'),
+            child: const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
                 'Order Medicines',
@@ -38,17 +38,18 @@ class NavRow extends StatelessWidget {
           ),
         )),
         Expanded(
-            child: InkWell(
-          onTap: () => Navigator.of(context).pushNamed('/404'),
-          child: const Card(
-              color: Colors.grey,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Book Lab Appointment',
-                  textAlign: TextAlign.center,
-                ),
-              )),
+            child: Card(
+          color: Colors.grey,
+          child: InkWell(
+            onTap: () => Navigator.of(context).pushNamed('/404'),
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Book Lab Appointment',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
         ))
       ]),
     );
