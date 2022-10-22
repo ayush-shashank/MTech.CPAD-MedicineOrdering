@@ -1,29 +1,64 @@
+import 'package:flutter/cupertino.dart';
+import 'package:order_med/model/cart_item_model.dart';
 import 'package:order_med/model/product_model.dart';
 
-class ProductQuantity {
-  Product _product;
-  int _orderedQuantity = 0;
-  ProductQuantity(this._product, this._orderedQuantity);
+class Cart with ChangeNotifier {
+  static List<CartItem> _items = [];
+  static num _total = 0;
+
+  List<CartItem> get items => _items;
+  static num get total => _total;
+
+  List<CartItem> get orders => _items;
 
   @override
   String toString() {
-    return '{product: ${_product.toJson()}, quantity: $_orderedQuantity}';
+    return '{orders: $_items, total: $_total}';
   }
-}
 
-class Cart {
-  List<ProductQuantity> _orders = [];
-  num _total = 0;
+  void add(Product product) {
+    CartItem newOrder = CartItem(product);
+    newOrder.quantity = 1;
+    _items.add(newOrder);
+    _total += newOrder.orderTotal;
+    notifyListeners();
+  }
 
-  List<ProductQuantity> get orders => _orders;
+  static incrementQuantity(int index) {
+    CartItem order = _items.elementAt(index);
+    _total -= order.orderTotal;
+    try {
+      ++order.quantity;
+    } catch (err) {
+      print(err);
+    } finally {
+      _total += order.orderTotal;
+    }
+  }
 
-  set orders(List<ProductQuantity> value) => _orders = value;
+  static decrementQuantity(int index) {
+    CartItem order = _items.elementAt(index);
+    _total -= order.orderTotal;
+    try {
+      --order.quantity;
+    } catch (err) {
+      print(err);
+    } finally {
+      _total += order.orderTotal;
+    }
+  }
 
-  get total => _total;
+  void remove(int index) {
+    CartItem removed = items.removeAt(index);
+    _total -= removed.orderTotal;
+    notifyListeners();
+  }
 
-  set total(value) => _total = value;
-  @override
-  String toString() {
-    return '{orders: $_orders, total: $_total}';
+  static num getTotal() {
+    _total = 0;
+    for (var i = 0; i < _items.length; i++) {
+      _total += _items.elementAt(i).orderTotal;
+    }
+    return _total;
   }
 }

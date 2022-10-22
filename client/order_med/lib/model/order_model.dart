@@ -16,7 +16,7 @@ class Order {
     required productId,
     productName,
     required quantity,
-    orderAmount,
+    required orderAmount,
     isActive,
     prescription,
     createdAt,

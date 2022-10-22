@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:order_med/model/cart_model.dart';
 import 'package:order_med/service/router_service.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+        providers: [ChangeNotifierProvider(create: (_) => Cart())],
+        child: const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
