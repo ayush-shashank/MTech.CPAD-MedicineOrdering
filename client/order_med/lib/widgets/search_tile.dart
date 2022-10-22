@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:order_med/model/product_model.dart';
 import 'package:order_med/globals.dart' as globals;
 import 'package:order_med/pages/product_page.dart';
+import 'package:intl/intl.dart';
+
+final formatCurrency = NumberFormat.currency(
+  name: "INR",
+  locale: 'en_IN',
+  decimalDigits: 2,
+  symbol: '₹ ',
+);
 
 class SearchTile extends StatelessWidget {
   final Product product;
@@ -45,7 +53,7 @@ class SearchTile extends StatelessWidget {
           ),
         ),
       ),
-      trailing: Text('₹${product.price}'),
+      trailing: Text(formatCurrency.format(product.price)),
     );
   }
 }

@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:order_med/model/order_model.dart';
 import 'package:order_med/pages/product_page.dart';
 import 'package:order_med/globals.dart' as globals;
+import 'package:intl/intl.dart';
+
+final formatCurrency = NumberFormat.currency(
+  name: "INR",
+  locale: 'en_IN',
+  decimalDigits: 2,
+  symbol: '₹ ',
+);
 
 class OrderCard extends StatelessWidget {
   final Order order;
@@ -86,7 +94,7 @@ class OrderCard extends StatelessWidget {
                   subtitle: Text(
                     'Quantity: ${order.quantity}',
                   ),
-                  trailing: Text('₹${order.orderAmount}'),
+                  trailing: Text(formatCurrency.format(order.orderAmount)),
                 ),
                 Text(
                   'Last Updated On ${formatDate(order.updatedAt!, [
