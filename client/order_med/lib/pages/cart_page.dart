@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:order_med/model/cart_item_model.dart';
 import 'package:order_med/model/cart_model.dart';
+import 'package:order_med/widgets/cart_item_card.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'dart:io';
+import 'dart:async';
 
 final formatCurrency = NumberFormat.currency(
   name: "INR",
@@ -40,57 +44,9 @@ class _CartPageState extends State<CartPage> {
               itemCount: context.watch<Cart>().items.length,
               itemBuilder: (context, index) {
                 CartItem item = context.watch<Cart>().items.elementAt(index);
-                return Card(
-                  child: InkWell(
-                    child: Row(
-                      children: [
-                        Column(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Cart.incrementQuantity(index);
-                                setState(() {});
-                                print("++");
-                              },
-                              icon: const Icon(
-                                Icons.add_circle,
-                                color: Colors.green,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                              child: Text('${item.quantity}'),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                Cart.decrementQuantity(index);
-                                setState(() {});
-                                print("--");
-                              },
-                              icon: const Icon(Icons.remove_circle,
-                                  color: Colors.red),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          item.product.name,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          ' (Avail. ${item.product.quantityAvailable})',
-                        ),
-                        Expanded(child: Container()),
-                        IconButton(
-                            onPressed: () {
-                              context.read<Cart>().remove(index);
-                            },
-                            icon: const Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                            ))
-                      ],
-                    ),
-                  ),
+                return CartItemWidget(
+                  item: item,
+                  index: index,
                 );
               },
             ),

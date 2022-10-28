@@ -1,10 +1,14 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:order_med/model/product_model.dart';
 
 class CartItem {
   final Product _product;
   int _quantity = 0;
   num _orderTotal = 0;
-  // late ByteStream prescription;
+  bool isUploaded = false;
+  File? prescription;
 
   CartItem(this._product);
 
