@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:order_med/globals.dart' as globals;
+import 'package:order_med/model/cart_item_model.dart';
 import 'package:order_med/model/order_model.dart';
 import 'package:order_med/service/network_service.dart';
 
@@ -19,6 +20,7 @@ class OrderService {
       '/user/${globals.userId}/latestTransactions';
   final String _allOrdersPath = '/user/${globals.userId}/orders';
   final String _orderPath = '/order';
+  final String _placeOrder = '/user/${globals.userId}/orderMedicine';
 
   Future<List<Order>> getActiveTransactions() async {
     String response = await NetworkService.fetch(_activeTransactionsPath);
@@ -45,5 +47,22 @@ class OrderService {
     String response = await NetworkService.fetch('$_orderPath/$orderId');
     Map<String, dynamic> json = jsonDecode(response);
     return Order.fromJson(json);
+  }
+
+  Future<void> placeOrder(CartItem item) async {
+    // TODO: Upload Image, get Image URL & set url in order object
+
+    Order toPlace = Order();
+    toPlace.customerId = globals.userId;
+    toPlace.productId = item.product.id;
+    toPlace.productName = item.product.name;
+    toPlace.quantity = item.quantity;
+    toPlace.orderAmount = item.orderTotal;
+
+    String response =
+        await NetworkService.fetch(_placeOrder, body: toPlace.toJson());
+    Map<String, dynamic> json = jsonDecode(response);
+    print(json);
+    // return Order.fromJson(json);
   }
 }

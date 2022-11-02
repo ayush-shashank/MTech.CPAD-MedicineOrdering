@@ -3,10 +3,10 @@ class Order {
   String? _customerId;
   String? _productId;
   String? _productName;
-  int? _quantity;
-  double? _orderAmount;
-  bool? _isActive;
-  String? _prescriptionURL;
+  int? _quantity = 0;
+  double? _orderAmount = 0;
+  bool _isActive = true;
+  String _prescriptionURL = '';
   DateTime? _createdAt;
   DateTime? _updatedAt;
 

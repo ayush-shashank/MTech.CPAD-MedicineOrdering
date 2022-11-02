@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:order_med/model/cart_item_model.dart';
 import 'package:order_med/model/cart_model.dart';
+import 'package:order_med/pages/order_processing.dart';
 import 'package:order_med/service/order_service.dart';
 import 'package:order_med/widgets/cart_item_card.dart';
 import 'package:provider/provider.dart';
@@ -89,13 +90,8 @@ class _CartPageState extends State<CartPage> {
                         borderRadius: BorderRadius.circular(16.0),
                       ))),
                       onPressed: context.watch<Cart>().isGood()
-                          ? () {
-                              // TODO: Place order
-                              context.read<Cart>().items.forEach((item) {
-                                OrderService.instance.placeOrder(item);
-                              });
-                              print('placed order');
-                            }
+                          ? () => Navigator.pushNamed(
+                              context, OrderProcessingPage.routeName)
                           : null,
                       child: const Text(
                         'Place Order',

@@ -4,6 +4,7 @@ import 'package:order_med/pages/dashboard_page.dart';
 import 'package:order_med/pages/home_page.dart';
 import 'package:order_med/pages/login_page.dart';
 import 'package:order_med/pages/order_medicine_page.dart';
+import 'package:order_med/pages/order_processing.dart';
 import 'package:order_med/pages/product_page.dart';
 import 'package:order_med/pages/under_construction.dart';
 
@@ -13,8 +14,9 @@ class RouterService {
     const String loginRoute = LoginPage.routeName;
     const String dashboardRoute = DashboardPage.routeName;
     const String orderMedicineRoute = OrderMedicinePage.routeName;
-    const String cartPageRoute = CartPage.routeName;
     const String productRoute = ProductPage.routeName;
+    const String cartPageRoute = CartPage.routeName;
+    const String orderProcessingPageRoute = OrderProcessingPage.routeName;
     const String underConstructionRoute = UnderConstruction.routeName;
 
     switch (settings.name) {
@@ -29,6 +31,8 @@ class RouterService {
         return MaterialPageRoute(builder: (_) => const OrderMedicinePage());
       case cartPageRoute:
         return MaterialPageRoute(builder: (_) => const CartPage());
+      case orderProcessingPageRoute:
+        return MaterialPageRoute(builder: (_) => const OrderProcessingPage());
       case productRoute:
         String productId = settings.arguments as String;
         return MaterialPageRoute(

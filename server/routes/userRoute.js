@@ -49,9 +49,9 @@ user.get('/:id/latestTransactions', async (req, res) => {
 
 // POST Order Medicine
 user.post('/:id/orderMedicine', async (req, res) => {
-    let order = { ...req.body };
-    let condition = { _id: order.productId, qtyAvailable: { $gte: order.qty } };
-    let update = { $inc: { qtyAvailable: -order.qty } };
+    let order = { ...req.body, isActive: true };
+    let condition = { _id: order.productId, quantityAvailable: { $gte: order.quantity } };
+    let update = { $inc: { quantityAvailable: -order.quantity } };
     let options = { returnDocument: 'after' };
     try {
         let productDoc = await productModel.findOneAndUpdate(condition, update, options);
