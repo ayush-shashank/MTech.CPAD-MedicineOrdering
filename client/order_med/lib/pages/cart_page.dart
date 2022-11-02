@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:order_med/model/cart_item_model.dart';
 import 'package:order_med/model/cart_model.dart';
+import 'package:order_med/service/order_service.dart';
 import 'package:order_med/widgets/cart_item_card.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -90,7 +91,10 @@ class _CartPageState extends State<CartPage> {
                       onPressed: context.watch<Cart>().isGood()
                           ? () {
                               // TODO: Place order
-                              print('place order');
+                              context.read<Cart>().items.forEach((item) {
+                                OrderService.instance.placeOrder(item);
+                              });
+                              print('placed order');
                             }
                           : null,
                       child: const Text(

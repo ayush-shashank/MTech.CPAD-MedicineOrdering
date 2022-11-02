@@ -14,14 +14,11 @@ class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.productId});
 
   @override
-  State<ProductPage> createState() => _ProductPageState(productId);
+  State<ProductPage> createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
-  final String productId;
   late Product product;
-
-  _ProductPageState(this.productId);
 
   Future<Product> getProduct(String id) async {
     return await ProductService.instance.getProduct(id);
@@ -71,7 +68,7 @@ class _ProductPageState extends State<ProductPage> {
           children: [
             Text('Weight: ${product.weightInGrams}g'),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 12),
+              margin: const EdgeInsets.symmetric(vertical: 12),
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
                   border: Border.all(width: 2, color: Colors.teal),
@@ -94,7 +91,7 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: getProduct(productId),
+        future: getProduct(widget.productId),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Container();
@@ -109,10 +106,7 @@ class _ProductPageState extends State<ProductPage> {
             var addToCart = ElevatedButton(
                 onPressed: (isAvailable && !isInCart)
                     ? () {
-                        product.doesRequirePrescription
-                            // TODO: Attach prescription
-                            ? context.read<Cart>().add(product)
-                            : context.read<Cart>().add(product);
+                        context.read<Cart>().add(product);
                       }
                     : null,
                 child: Padding(
