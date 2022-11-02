@@ -6,22 +6,11 @@ class Order {
   int? _quantity;
   double? _orderAmount;
   bool? _isActive;
-  List<dynamic>? _prescription;
+  String? _prescriptionURL;
   DateTime? _createdAt;
   DateTime? _updatedAt;
 
-  Order({
-    id,
-    required customerId,
-    required productId,
-    productName,
-    required quantity,
-    required orderAmount,
-    isActive,
-    prescription,
-    createdAt,
-    updatedAt,
-  });
+  Order();
 
   get id => _id;
   set id(value) => _id = value;
@@ -44,8 +33,8 @@ class Order {
   get isActive => _isActive;
   set isActive(value) => _isActive = value;
 
-  get prescription => _prescription;
-  set prescription(value) => _prescription = value;
+  get prescriptionURL => _prescriptionURL;
+  set prescription(value) => _prescriptionURL = value;
 
   DateTime? get createdAt => _createdAt;
   set createdAt(DateTime? value) => _createdAt = value;
@@ -61,7 +50,7 @@ class Order {
     _quantity = json['quantity'] ?? 0;
     _orderAmount = json['orderAmount'] ?? 0;
     _isActive = json['isActive'];
-    _prescription = List.castFrom<dynamic, dynamic>(json['prescription']);
+    _prescriptionURL = json['prescriptionURL'];
     _createdAt = DateTime.tryParse(json['createdAt']);
     _updatedAt = DateTime.tryParse(json['updatedAt']);
   }
@@ -74,7 +63,7 @@ class Order {
     data['quantity'] = _quantity;
     data['orderAmount'] = _orderAmount;
     data['isActive'] = _isActive;
-    data['prescription'] = _prescription;
+    data['prescriptionURL'] = _prescriptionURL;
     data['createdAt'] = _createdAt;
     data['updatedAt'] = _updatedAt;
     return data;

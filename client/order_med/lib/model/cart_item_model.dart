@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:order_med/model/product_model.dart';
 
 class CartItem {

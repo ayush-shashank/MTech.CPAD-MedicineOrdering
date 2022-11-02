@@ -6,14 +6,7 @@ class Customer {
   late final String _password;
   late List<String> _orders = [];
 
-  Customer({
-    id,
-    required name,
-    required email,
-    phoneNumber,
-    required password,
-    orders,
-  });
+  Customer();
 
   String get id => _id;
   set id(String value) => _id = value;

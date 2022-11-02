@@ -68,12 +68,6 @@ class Cart with ChangeNotifier {
   }
 
   isGood() {
-    var x = _items.where((element) => element.product.doesRequirePrescription);
-    x.forEach((element) {
-      print("${element.product.name} - up? ${element.isUploaded}");
-    });
-    var y = x.every((element) => element.isUploaded);
-    print('every? ' + y.toString());
     return _items
         .where((element) => element.product.doesRequirePrescription)
         .every((element) => element.isUploaded);

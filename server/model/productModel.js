@@ -19,7 +19,10 @@ const productSchema = new Schema({
         required: true,
         min: 0
     },
-    productImage: [{ type: String }],
+    productImageURL: {
+        type: String,
+        default: ''
+    },
     doesRequirePrescription: {
         type: Boolean,
         default: false

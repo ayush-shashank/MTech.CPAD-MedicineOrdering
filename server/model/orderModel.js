@@ -3,7 +3,7 @@ const { Schema, SchemaTypes, default: mongoose } = require("mongoose");
 const orderSchema = new Schema({
     customerId: {
         type: SchemaTypes.ObjectId,
-        required: true
+        required: true,
     },
     productId: {
         type: SchemaTypes.ObjectId,
@@ -27,7 +27,10 @@ const orderSchema = new Schema({
         type: Boolean,
         default: true
     },
-    prescription: [{ data: Buffer, contentType: String }],
+    prescriptionURL: {
+        type: String,
+        default: ''
+    },
 }, { timestamps: true });
 
 const orderModel = mongoose.model("Order", orderSchema);

@@ -9,17 +9,7 @@ class Product {
   DateTime? _createdAt;
   DateTime? _updatedAt;
 
-  Product({
-    required id,
-    required name,
-    required weightInGrams,
-    required price,
-    required quantityAvailable,
-    required productImage,
-    required doesRequirePrescription,
-    required createdAt,
-    required updatedAt,
-  });
+  Product();
 
   String? get id => _id;
   set id(String? value) => _id = value;
