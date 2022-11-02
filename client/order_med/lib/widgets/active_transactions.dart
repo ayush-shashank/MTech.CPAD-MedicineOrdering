@@ -4,14 +4,14 @@ import 'package:order_med/service/order_service.dart';
 import 'package:order_med/widgets/order_card.dart';
 
 class ActiveTransactions extends StatefulWidget {
-  const ActiveTransactions({super.key});
+  ActiveTransactions({super.key});
 
   @override
   State<ActiveTransactions> createState() => _ActiveTransactionsState();
 }
 
 class _ActiveTransactionsState extends State<ActiveTransactions> {
-  Widget orders = const Center(child: Text("No Transactions"));
+  List<Order> orderList = [];
   @override
   void initState() {
     super.initState();
@@ -19,36 +19,25 @@ class _ActiveTransactionsState extends State<ActiveTransactions> {
   }
 
   void getActiveTransactions() async {
-    List<Order> orderList = await OrderService.instance.getActiveTransactions();
+    orderList = await OrderService.instance.getActiveTransactions();
     if (orderList.isNotEmpty) {
-      setState(() {
-        orders = ListView.builder(
-          // physics: const AlwaysScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: orderList.length,
-          itemBuilder: (context, index) {
-            return OrderCard(order: orderList[index]);
-          },
-        );
-      });
+      setState(() {});
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 8),
-        const Center(
-            child: Text(
-          'Active Transactions',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        )),
-        const SizedBox(
-          height: 8,
-        ),
-        orders
-      ],
-    );
+    return orderList.isEmpty
+        ? const Center(child: Text("No Transactions"))
+        : Expanded(
+            child: ListView.builder(
+              // physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: orderList.length,
+              itemBuilder: (context, index) {
+                return OrderCard(order: orderList[index]);
+              },
+            ),
+          );
   }
 }

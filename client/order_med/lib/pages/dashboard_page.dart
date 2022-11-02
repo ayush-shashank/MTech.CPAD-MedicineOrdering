@@ -46,15 +46,20 @@ class DashboardPage extends StatelessWidget {
             ),
           )
         ]),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: const [
-              NavRow(),
-              ActiveTransactions(),
-            ],
-          ),
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const NavRow(),
+            const SizedBox(height: 8),
+            const Center(
+                child: Text(
+              'Active Transactions',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )),
+            const SizedBox(height: 8),
+            ActiveTransactions(),
+          ],
         ));
   }
 }
