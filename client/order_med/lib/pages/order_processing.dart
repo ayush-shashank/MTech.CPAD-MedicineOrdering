@@ -15,32 +15,44 @@ class OrderProcessingPage extends StatefulWidget {
 
 class _OrderProcessingPageState extends State<OrderProcessingPage> {
   double n = 0.0;
-  bool done = false;
+  String status = 'Processing Transactions...';
 
   @override
   initState() {
     super.initState();
-    Future.delayed(Duration.zero, () => processOrders(context.read<Cart>()));
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => processOrders(context.read<Cart>()));
   }
 
   processOrders(Cart cart) async {
     List<CartItem> items = cart.items;
     for (int i = 0; i < items.length; ++i) {
-      Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 2));
       try {
         OrderService.instance.placeOrder(items[i]);
-        cart.remove(i);
         setState(() {
-          n = i / items.length;
+          if (items.isNotEmpty) {
+            n = (i + 1) / items.length;
+          }
         });
       } catch (err) {
         print(err);
       }
     }
-    Future.delayed(const Duration(seconds: 5));
-    done = true;
-    Navigator.of(context).pushReplacementNamed(DashboardPage.routeName);
-    //, (route) => false);
+    cart.clear();
+    setState(() {
+      status = 'Processing Complete';
+    });
+    await Future.delayed(const Duration(seconds: 3));
+    setState(() {
+      status = 'Redirecting';
+    });
+    await Future.delayed(const Duration(seconds: 2));
+    if (!mounted) return;
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      DashboardPage.routeName,
+      (route) => false,
+    );
   }
 
   @override
@@ -50,11 +62,18 @@ class _OrderProcessingPageState extends State<OrderProcessingPage> {
         title: const Text('Processing Transaction'),
       ),
       body: Center(
-          child: done
-              ? const Text('redirecting')
-              : CircularProgressIndicator(
-                  value: n,
-                )),
+          child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CircularProgressIndicator(
+            value: n,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Text(status)
+        ],
+      )),
     );
   }
 }

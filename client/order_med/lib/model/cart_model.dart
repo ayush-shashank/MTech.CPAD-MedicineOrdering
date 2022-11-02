@@ -6,7 +6,7 @@ import 'package:order_med/model/cart_item_model.dart';
 import 'package:order_med/model/product_model.dart';
 
 class Cart with ChangeNotifier {
-  final List<CartItem> _items = [];
+  List<CartItem> _items = [];
   num _total = 0;
 
   List<CartItem> get items => _items;
@@ -85,5 +85,10 @@ class Cart with ChangeNotifier {
     order.prescription = null;
     order.isUploaded = false;
     notifyListeners();
+  }
+
+  clear() {
+    _items = [];
+    _total = 0;
   }
 }
