@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:order_med/model/cart_item_model.dart';
 import 'package:order_med/model/cart_model.dart';
 import 'package:order_med/widgets/cart_item_card.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'dart:io';
-import 'dart:async';
 
 final formatCurrency = NumberFormat.currency(
   name: "INR",
@@ -27,6 +24,7 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
+    bool isEmpty = context.read<Cart>().items.isEmpty;
     return Scaffold(
       appBar: AppBar(
           title: Row(
@@ -36,9 +34,9 @@ class _CartPageState extends State<CartPage> {
               Icons.shopping_cart,
               size: 20,
             ),
-            Text(' Cart'),
+            Text(' My Cart'),
           ])),
-      body: context.read<Cart>().items.isEmpty
+      body: isEmpty
           ? const Center(child: Text("Cart is empty!"))
           : ListView.builder(
               itemCount: context.watch<Cart>().items.length,
@@ -50,19 +48,58 @@ class _CartPageState extends State<CartPage> {
                 );
               },
             ),
-      bottomSheet: Row(children: [
-        const Expanded(
-            child: Text(
-          "Cart Total :",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        )),
-        Expanded(
-          child: Text(
-            '${formatCurrency.format(Cart.total)}/-',
-            textAlign: TextAlign.end,
-          ),
-        )
-      ]),
+      bottomSheet: isEmpty
+          ? null
+          : Container(
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              color: Colors.grey.shade300,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Text(
+                      formatCurrency.format(context.watch<Cart>().total),
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20,
+                          color: Colors.teal),
+                    ),
+                  ),
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          //     textStyle:
+                          //         MaterialStateProperty.resolveWith((states) {
+                          //       if (states.contains(MaterialState.disabled)) {
+                          //         return TextStyle(color: Colors.grey.shade200);
+                          //       }
+                          //       return const TextStyle(color: Colors.white);
+                          //     }),
+                          //     backgroundColor:
+                          //         MaterialStateProperty.resolveWith((states) {
+                          //       if (states.contains(MaterialState.disabled)) {
+                          //         return Colors.grey.shade900;
+                          //       }
+                          //       return Colors.teal.shade700;
+                          //     }),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                      ))),
+                      onPressed: context.watch<Cart>().isGood()
+                          ? () {
+                              // TODO: Place order
+                              print('place order');
+                            }
+                          : null,
+                      child: const Text(
+                        'Place Order',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ))
+                ],
+              ),
+            ),
     );
   }
 }

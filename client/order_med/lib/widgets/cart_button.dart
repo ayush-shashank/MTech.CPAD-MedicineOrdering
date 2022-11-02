@@ -21,7 +21,7 @@ class _CartButtonState extends State<CartButton> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 5.0),
-      child: context.watch<Cart>().items.length > 0
+      child: context.watch<Cart>().items.isNotEmpty
           ? Badge(
               position: BadgePosition.topEnd(top: 0, end: 3),
               animationDuration: const Duration(milliseconds: 300),

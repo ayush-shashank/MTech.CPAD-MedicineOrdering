@@ -1,13 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:order_med/model/cart_item_model.dart';
 import 'package:order_med/model/product_model.dart';
 
 class Cart with ChangeNotifier {
-  static List<CartItem> _items = [];
-  static num _total = 0;
+  final List<CartItem> _items = [];
+  num _total = 0;
 
   List<CartItem> get items => _items;
-  static num get total => _total;
+  num get total => _total;
 
   List<CartItem> get orders => _items;
 
@@ -24,7 +27,7 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  static incrementQuantity(int index) {
+  incrementQuantity(int index) {
     CartItem order = _items.elementAt(index);
     _total -= order.orderTotal;
     try {
@@ -34,9 +37,10 @@ class Cart with ChangeNotifier {
     } finally {
       _total += order.orderTotal;
     }
+    notifyListeners();
   }
 
-  static decrementQuantity(int index) {
+  decrementQuantity(int index) {
     CartItem order = _items.elementAt(index);
     _total -= order.orderTotal;
     try {
@@ -46,6 +50,7 @@ class Cart with ChangeNotifier {
     } finally {
       _total += order.orderTotal;
     }
+    notifyListeners();
   }
 
   void remove(int index) {
@@ -54,11 +59,37 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  static num getTotal() {
+  num getTotal() {
     _total = 0;
     for (var i = 0; i < _items.length; i++) {
       _total += _items.elementAt(i).orderTotal;
     }
     return _total;
+  }
+
+  isGood() {
+    var x = _items.where((element) => element.product.doesRequirePrescription);
+    x.forEach((element) {
+      print("${element.product.name} - up? ${element.isUploaded}");
+    });
+    var y = x.every((element) => element.isUploaded);
+    print('every? ' + y.toString());
+    return _items
+        .where((element) => element.product.doesRequirePrescription)
+        .every((element) => element.isUploaded);
+  }
+
+  uploadPrescription(int index, XFile? image) {
+    CartItem order = _items.elementAt(index);
+    order.prescription = File(image!.path);
+    order.isUploaded = true;
+    notifyListeners();
+  }
+
+  removePrescription(int index) {
+    CartItem order = _items.elementAt(index);
+    order.prescription = null;
+    order.isUploaded = false;
+    notifyListeners();
   }
 }
