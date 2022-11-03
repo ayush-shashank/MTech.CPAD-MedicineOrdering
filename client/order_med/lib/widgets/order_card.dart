@@ -1,13 +1,8 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:order_med/model/cart_model.dart';
 import 'package:order_med/model/order_model.dart';
-import 'package:order_med/model/product_model.dart';
 import 'package:order_med/globals.dart' as globals;
 import 'package:intl/intl.dart';
-import 'package:order_med/pages/cart_page.dart';
-import 'package:order_med/service/product_service.dart';
-import 'package:provider/provider.dart';
 
 final formatCurrency = NumberFormat.currency(
   name: "INR",
@@ -18,25 +13,8 @@ final formatCurrency = NumberFormat.currency(
 
 class OrderCard extends StatelessWidget {
   final Order order;
-  bool repeat = false;
 
-  OrderCard({super.key, required this.order, required this.repeat});
-
-  repeatOrder(BuildContext context) async {
-    Product product = await ProductService.instance.getProduct(order.productId);
-    Cart cart = context.read<Cart>();
-    try {
-      cart.add(product, order.quantity);
-    } catch (err) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.red[600],
-          duration: const Duration(milliseconds: 250),
-          content: Text(err.toString().split(':')[1].substring(1))));
-      print(err);
-    }
-    // Navigator.of(context).pushNamed(CartPage.routeName);
-  }
+  const OrderCard({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -87,67 +65,32 @@ class OrderCard extends StatelessWidget {
                   )),
                 ],
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.fromLTRB(0, 2, 0, 2),
-                      minLeadingWidth: 50,
-                      leading: ClipRRect(
-                        clipBehavior: Clip.antiAlias,
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image.network(
-                            '${globals.baseUrl}/assets/img/${order.productId}/0.jpg',
-                            width: 50,
-                            height: 50,
-                            fit: BoxFit.cover,
-                            semanticLabel: 'Image',
-                            errorBuilder: (BuildContext context,
-                                    Object exception, StackTrace? stackTrace) =>
-                                const Icon(
-                                  Icons.warning_amber_rounded,
-                                  size: 50,
-                                  color: Colors.amber,
-                                )),
-                      ),
-                      title: Text(order.productName,
-                          style: const TextStyle(fontWeight: FontWeight.bold)),
-                      subtitle: Text(
-                        'Quantity: ${order.quantity}',
-                      ),
-                      trailing: Text(formatCurrency.format(order.orderAmount)),
-                    ),
-                  ),
-                  repeat
-                      ? Card(
-                          margin: const EdgeInsets.only(left: 4),
-                          elevation: 4,
-                          clipBehavior: Clip.antiAlias,
-                          child: InkWell(
-                            onTap: () {
-                              // Add to Cart
-                              repeatOrder(context);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              color: Colors.amber,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(
-                                    Icons.replay_circle_filled_rounded,
-                                    size: 32,
-                                  ),
-                                  Text('Repeat'),
-                                  Text('Order'),
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
-                      : const SizedBox.shrink(),
-                ],
+              ListTile(
+                contentPadding: const EdgeInsets.fromLTRB(0, 2, 0, 2),
+                minLeadingWidth: 50,
+                leading: ClipRRect(
+                  clipBehavior: Clip.antiAlias,
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.network(
+                      '${globals.baseUrl}/assets/img/${order.productId}/0.jpg',
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                      semanticLabel: 'Image',
+                      errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrace) =>
+                          const Icon(
+                            Icons.warning_amber_rounded,
+                            size: 50,
+                            color: Colors.amber,
+                          )),
+                ),
+                title: Text(order.productName,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                subtitle: Text(
+                  'Quantity: ${order.quantity}',
+                ),
+                trailing: Text(formatCurrency.format(order.orderAmount)),
               ),
               Text(
                 'Last Updated On ${formatDate(order.updatedAt!, [

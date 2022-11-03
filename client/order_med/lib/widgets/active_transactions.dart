@@ -4,7 +4,7 @@ import 'package:order_med/service/order_service.dart';
 import 'package:order_med/widgets/order_card.dart';
 
 class ActiveTransactions extends StatefulWidget {
-  ActiveTransactions({super.key});
+  const ActiveTransactions({super.key});
 
   @override
   State<ActiveTransactions> createState() => _ActiveTransactionsState();
@@ -35,10 +35,7 @@ class _ActiveTransactionsState extends State<ActiveTransactions> {
               shrinkWrap: true,
               itemCount: orderList.length,
               itemBuilder: (context, index) {
-                return OrderCard(
-                  order: orderList[index],
-                  repeat: false,
-                );
+                return OrderCard(order: orderList[index]);
               },
             ),
           );
