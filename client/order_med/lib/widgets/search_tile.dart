@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:order_med/model/product_model.dart';
 import 'package:order_med/globals.dart' as globals;
@@ -38,19 +39,18 @@ class SearchTile extends StatelessWidget {
         child: Hero(
           transitionOnUserGestures: true,
           tag: 'location-img-${product.id}',
-          child: Image.network(
-            '${globals.baseUrl}/assets/img/${product.id}/0.jpg',
-            height: 50.0,
-            width: 50.0,
-            fit: BoxFit.cover,
-            errorBuilder: (BuildContext context, Object exception,
-                    StackTrace? stackTrace) =>
-                const Icon(
-              Icons.warning_amber_rounded,
-              size: 50,
-              color: Colors.amber,
-            ),
-          ),
+          child: CachedNetworkImage(
+              imageUrl: '${globals.baseUrl}/${product.productImage}',
+              fit: BoxFit.cover,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: CircularProgressIndicator(
+                        value: downloadProgress.progress),
+                  ),
+              errorWidget: (context, url, error) =>
+                  Image.asset('assets/img/product-placeholder-wp.jpg')),
         ),
       ),
       trailing: Text(formatCurrency.format(product.price)),

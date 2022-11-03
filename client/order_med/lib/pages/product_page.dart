@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:order_med/model/cart_model.dart';
 import 'package:order_med/model/product_model.dart';
@@ -29,21 +30,20 @@ class _ProductPageState extends State<ProductPage> {
         child: Hero(
           transitionOnUserGestures: true,
           tag: 'location-img-${product.id}',
-          child: Image.network(
-            '${globals.baseUrl}/assets/img/${product.id}/0.jpg',
-            height: 240,
-            fit: BoxFit.fitWidth,
-            alignment: Alignment.topCenter,
-            errorBuilder: (BuildContext context, Object exception,
-                    StackTrace? stackTrace) =>
-                const Center(
-              child: Icon(
-                Icons.warning_amber_rounded,
-                size: 100,
-                color: Colors.amber,
-              ),
-            ),
-          ),
+          child: CachedNetworkImage(
+              height: 240,
+              fit: BoxFit.fitWidth,
+              alignment: Alignment.topCenter,
+              imageUrl: '${globals.baseUrl}/${product.productImage}',
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: LinearProgressIndicator(
+                        value: downloadProgress.progress),
+                  ),
+              errorWidget: (context, url, error) => Center(
+                  child: Image.asset('assets/img/product-placeholder-wp.jpg'))),
         ),
       );
   setProductName() => Container(

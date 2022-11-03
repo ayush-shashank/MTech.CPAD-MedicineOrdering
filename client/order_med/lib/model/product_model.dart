@@ -4,7 +4,7 @@ class Product {
   int? _weightInGrams;
   double? _price;
   int? _quantityAvailable;
-  List<String>? _productImage;
+  String? _productImage;
   bool? _doesRequirePrescription;
   DateTime? _createdAt;
   DateTime? _updatedAt;
@@ -26,8 +26,8 @@ class Product {
   get quantityAvailable => _quantityAvailable;
   set quantityAvailable(value) => _quantityAvailable = value;
 
-  List<String> get productImage => _productImage ?? [];
-  set productImage(List<String> value) => _productImage = value;
+  String? get productImage => _productImage;
+  set productImage(String? value) => _productImage = value;
 
   get doesRequirePrescription => _doesRequirePrescription;
   set doesRequirePrescription(value) => _doesRequirePrescription = value;
@@ -44,7 +44,7 @@ class Product {
     _weightInGrams = json['weightInGrams'] ?? 0;
     _price = json['price'] ?? 0;
     _quantityAvailable = json['quantityAvailable'] ?? 0;
-    _productImage = List.castFrom<dynamic, String>(json['productImage'] ?? []);
+    _productImage = (json['productImageURL']);
     _doesRequirePrescription = json['doesRequirePrescription'] ?? false;
     _createdAt =
         DateTime.tryParse(json['createdAt'] ?? DateTime.now().toString());
@@ -59,7 +59,7 @@ class Product {
     data['weightInGrams'] = _weightInGrams;
     data['price'] = _price;
     data['quantityAvailable'] = _quantityAvailable;
-    data['productImage'] = _productImage;
+    data['productImageURL'] = _productImage;
     data['doesRequirePrescription'] = _doesRequirePrescription;
     data['createdAt'] = _createdAt?.toIso8601String();
     data['updatedAt'] = _updatedAt?.toIso8601String();

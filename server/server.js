@@ -13,8 +13,8 @@ const requestLogger = (req, res, next) => {
     console.log(`=> ${req.method}  \t${req.path}`);
     next();
 }
+app.use('/public', express.static('public'))
 app.use(cors());
-app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json({ urlencoded: true }));
 app.use(requestLogger);
 

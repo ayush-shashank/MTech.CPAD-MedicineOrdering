@@ -7,6 +7,7 @@ class Order {
   double? _orderAmount = 0;
   bool _isActive = true;
   String _prescriptionURL = '';
+  String _productImageURL = '';
   DateTime? _createdAt;
   DateTime? _updatedAt;
 
@@ -33,8 +34,11 @@ class Order {
   get isActive => _isActive;
   set isActive(value) => _isActive = value;
 
-  get prescriptionURL => _prescriptionURL;
-  set prescription(value) => _prescriptionURL = value;
+  String get prescriptionURL => _prescriptionURL;
+  set prescriptionURL(String value) => _prescriptionURL = value;
+
+  String get productImageURL => _productImageURL;
+  set productImageURL(String value) => _productImageURL = value;
 
   DateTime? get createdAt => _createdAt;
   set createdAt(DateTime? value) => _createdAt = value;
@@ -51,6 +55,7 @@ class Order {
     _orderAmount = json['orderAmount'] ?? 0;
     _isActive = json['isActive'];
     _prescriptionURL = json['prescriptionURL'];
+    _productImageURL = json['productImageURL'];
     _createdAt = DateTime.tryParse(json['createdAt']);
     _updatedAt = DateTime.tryParse(json['updatedAt']);
   }
@@ -64,6 +69,7 @@ class Order {
     data['orderAmount'] = _orderAmount;
     data['isActive'] = _isActive;
     data['prescriptionURL'] = _prescriptionURL;
+    data['productImageURL'] = _productImageURL;
     data['createdAt'] = _createdAt;
     data['updatedAt'] = _updatedAt;
     return data;

@@ -49,20 +49,21 @@ class OrderService {
     return Order.fromJson(json);
   }
 
-  Future<void> placeOrder(CartItem item) async {
-    // TODO: Upload Image, get Image URL & set url in order object
-
+  Future<Order> placeOrder(CartItem item) async {
+    String pathToImage = '';
+    if (item.product.doesRequirePrescription) {
+      pathToImage = await NetworkService.uploadImage(item.prescription!);
+    }
     Order toPlace = Order();
     toPlace.customerId = globals.userId;
     toPlace.productId = item.product.id;
     toPlace.productName = item.product.name;
     toPlace.quantity = item.quantity;
     toPlace.orderAmount = item.orderTotal;
-
+    toPlace.prescriptionURL = pathToImage;
     String response =
         await NetworkService.fetch(_placeOrder, body: toPlace.toJson());
     Map<String, dynamic> json = jsonDecode(response);
-    print(json);
-    // return Order.fromJson(json);
+    return Order.fromJson(json);
   }
 }

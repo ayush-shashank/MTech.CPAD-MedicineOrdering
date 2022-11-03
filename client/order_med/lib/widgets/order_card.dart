@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:order_med/model/order_model.dart';
 import 'package:order_med/globals.dart' as globals;
 import 'package:intl/intl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 final formatCurrency = NumberFormat.currency(
   name: "INR",
@@ -71,20 +72,31 @@ class OrderCard extends StatelessWidget {
                 leading: ClipRRect(
                   clipBehavior: Clip.antiAlias,
                   borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                      '${globals.baseUrl}/assets/img/${order.productId}/0.jpg',
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                      semanticLabel: 'Image',
-                      errorBuilder: (BuildContext context, Object exception,
-                              StackTrace? stackTrace) =>
-                          const Icon(
-                            Icons.warning_amber_rounded,
-                            size: 50,
-                            color: Colors.amber,
-                          )),
+                  child: CachedNetworkImage(
+                      imageUrl: '${globals.baseUrl}/${order.productImageURL}',
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => SizedBox(
+                                height: 50,
+                                width: 50,
+                                child: CircularProgressIndicator(
+                                    value: downloadProgress.progress),
+                              ),
+                      errorWidget: (context, url, error) =>
+                          Image.asset('assets/img/product-placeholder-wp.jpg')),
                 ),
+                // Image.network('${globals.baseUrl}/${order.productImageURL}',
+                //     width: 50,
+                //     height: 50,
+                //     fit: BoxFit.cover,
+                //     semanticLabel: 'Image',
+                //     errorBuilder: (BuildContext context, Object exception,
+                //             StackTrace? stackTrace) =>
+                //         const Icon(
+                //           Icons.warning_amber_rounded,
+                //           size: 50,
+                //           color: Colors.amber,
+                //         )),
+                // ),
                 title: Text(order.productName,
                     style: const TextStyle(fontWeight: FontWeight.bold)),
                 subtitle: Text(

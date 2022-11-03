@@ -27,6 +27,10 @@ const orderSchema = new Schema({
         type: Boolean,
         default: true
     },
+    productImageURL: {
+        type: String,
+        default: ''
+    },
     prescriptionURL: {
         type: String,
         default: ''

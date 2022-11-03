@@ -1,4 +1,5 @@
 const express = require("express");
+const multer = require("multer");
 const customerModel = require('../model/customerModel');
 const productModel = require("../model/productModel");
 
@@ -63,5 +64,30 @@ admin.patch("/product/:id", async (req, res) => {
         res.status(400).send(err);
     }
 });
+
+
+// Add Product Image
+const storage = multer.diskStorage({
+    destination: 'public/assets/img/',
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, file.fieldname + '-' + uniqueSuffix)
+    }
+});
+const upload = multer({ storage: storage });
+admin.patch("/product/:id/img", upload.single('image'), async (req, res) => {
+    req.file.filename = req.params.id;
+    console.log(req.file.path);
+    try {
+        let product = await productModel.findByIdAndUpdate(req.params.id, { productImageURL: req.file.path }, { returnDocument: 'after' });
+        res.json(product);
+    }
+    catch (err) {
+        console.error(err)
+        res.status(400).send(err);
+    }
+});
+
+
 
 module.exports = admin;

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:order_med/globals.dart' as globals;
 
 class NetworkService {
@@ -29,28 +29,43 @@ class NetworkService {
     return globals.baseUrl;
   }
 
-  static Future<dynamic> fetch(String path, {Object? body}) async {
+  static Future<dynamic> fetch(String path, {Object? body, File? image}) async {
     final uri = Uri.parse(globals.baseUrl + path);
     var headers = <String, String>{
       "Accept": "application/json",
       "Access-Control_Allow_Origin": "*",
       'Content-Type': 'application/json; charset=UTF-8'
     };
-    Response response;
+    http.Response response;
     if (body == null) {
       print('GET  \t $uri');
-      response = await get(uri, headers: headers);
+      response = await http.get(uri, headers: headers);
     } else {
       print('POST  \t $uri');
-      response = await post(uri, headers: headers, body: jsonEncode(body));
+      response = await http.post(uri, headers: headers, body: jsonEncode(body));
     }
-
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response, then parse the JSON.
       return response.body;
     } else {
       // If the server did not return a 200 OK response, then throw an exception.
       throw Exception('Failed to fetch');
+    }
+  }
+
+  static Future<String> uploadImage(File image) async {
+    final uri = Uri.parse('${globals.baseUrl}/order/uploadPrescription');
+    var request = http.MultipartRequest('POST', uri);
+    request.files.add(http.MultipartFile.fromBytes(
+        'image', image.readAsBytesSync(),
+        filename: image.path));
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      String str = await response.stream.bytesToString();
+      return str;
+    } else {
+      print(response.reasonPhrase);
+      throw 'Failed to Upload';
     }
   }
 }
