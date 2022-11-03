@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.grey[200],
+        // scaffoldBackgroundColor: Colors.grey[200],
         primarySwatch: Colors.teal,
       ),
       onGenerateRoute: RouterService.generateRoute,

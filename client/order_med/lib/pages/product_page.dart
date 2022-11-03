@@ -24,7 +24,7 @@ class _ProductPageState extends State<ProductPage> {
     return await ProductService.instance.getProduct(id);
   }
 
-  setProductImages() => ClipRRect(
+  setProductImage() => ClipRRect(
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
         child: Hero(
           transitionOnUserGestures: true,
@@ -93,99 +93,111 @@ class _ProductPageState extends State<ProductPage> {
     return FutureBuilder(
         future: getProduct(widget.productId),
         builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Container();
-          }
-          if (snapshot.hasData) {
-            product = snapshot.data!;
-            bool isInCart = context
-                .watch<Cart>()
-                .items
-                .any((element) => element.product.id == product.id);
-            bool isAvailable = product.quantityAvailable > 0;
-            var addToCart = ElevatedButton(
-                onPressed: (isAvailable && !isInCart)
-                    ? () {
-                        context.read<Cart>().add(product);
-                      }
+          Widget child;
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            child = const CircularProgressIndicator(key: ValueKey(0));
+          } else {
+            if (snapshot.hasData) {
+              product = snapshot.data!;
+              bool isInCart = context
+                  .watch<Cart>()
+                  .items
+                  .any((element) => element.product.id == product.id);
+              bool isAvailable = product.quantityAvailable > 0;
+              var addToCart = ElevatedButton(
+                  onPressed: (isAvailable && !isInCart)
+                      ? () {
+                          context.read<Cart>().add(product);
+                        }
+                      : null,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: isInCart
+                        ? const Text('Added to cart')
+                        : const Text('Add to cart'),
+                  ));
+              child = Scaffold(
+                key: const ValueKey(1),
+                extendBodyBehindAppBar: true,
+                appBar: AppBar(
+                    title: const Text(
+                      'Product Detail',
+                      style: TextStyle(shadows: [
+                        Shadow(offset: Offset(2, 2), blurRadius: 2.5)
+                      ]),
+                    ),
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    actions: const [CartButton()],
+                    iconTheme: const IconThemeData(
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(offset: Offset(2, 2), blurRadius: 2.5)
+                        ])),
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    setProductImage(),
+                    setProductName(),
+                    setProductDetails()
+                  ],
+                ),
+                bottomSheet: product.doesRequirePrescription
+                    ? Container(
+                        padding: const EdgeInsets.fromLTRB(4, 4, 8, 4),
+                        decoration: const BoxDecoration(color: Colors.red),
+                        child: Row(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(right: 4),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 4),
+                              child: const Icon(
+                                Icons.info_rounded,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const Expanded(
+                              child: Text(
+                                'An image of prescription will be required to order this product. Please attach the image while adding the product to the cart.',
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 14),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     : null,
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: isInCart
-                      ? const Text('Added to cart')
-                      : const Text('Add to cart'),
-                ));
-            return Scaffold(
-              extendBodyBehindAppBar: true,
-              appBar: AppBar(
-                  title: const Text(
-                    'Product Detail',
-                    style: TextStyle(shadows: [
-                      Shadow(offset: Offset(2, 2), blurRadius: 2.5)
-                    ]),
-                  ),
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  actions: const [CartButton()],
-                  iconTheme: const IconThemeData(color: Colors.white, shadows: [
-                    Shadow(offset: Offset(2, 2), blurRadius: 2.5)
-                  ])),
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  setProductImages(),
-                  setProductName(),
-                  setProductDetails()
+                persistentFooterButtons: [
+                  Center(
+                      child: product.doesRequirePrescription &&
+                              isAvailable &&
+                              !isInCart
+                          ? Badge(
+                              position:
+                                  BadgePosition.topEnd(top: -15, end: -7.5),
+                              animationDuration:
+                                  const Duration(milliseconds: 300),
+                              animationType: BadgeAnimationType.scale,
+                              badgeContent: const Text(
+                                '!',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              child: addToCart,
+                            )
+                          : addToCart)
                 ],
-              ),
-              bottomSheet: product.doesRequirePrescription
-                  ? Container(
-                      padding: const EdgeInsets.fromLTRB(4, 4, 8, 4),
-                      decoration: const BoxDecoration(color: Colors.red),
-                      child: Row(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(right: 4),
-                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                            child: const Icon(
-                              Icons.info_rounded,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const Expanded(
-                            child: Text(
-                              'An image of prescription will be required to order this product. Please attach the image while adding the product to the cart.',
-                              textAlign: TextAlign.justify,
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 14),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : null,
-              persistentFooterButtons: [
-                Center(
-                    child: product.doesRequirePrescription &&
-                            isAvailable &&
-                            !isInCart
-                        ? Badge(
-                            position: BadgePosition.topEnd(top: -15, end: -7.5),
-                            animationDuration:
-                                const Duration(milliseconds: 300),
-                            animationType: BadgeAnimationType.scale,
-                            badgeContent: const Text(
-                              '!',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            child: addToCart,
-                          )
-                        : addToCart)
-              ],
-            );
+              );
+            } else {
+              child = Container(
+                key: const ValueKey(0),
+              );
+            }
           }
-          return const Center(
-            child: Text('Loading Product Details...'),
+          return AnimatedSwitcher(
+            duration: const Duration(milliseconds: 750),
+            child: child,
           );
         });
   }

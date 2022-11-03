@@ -23,6 +23,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
     CartItem item = widget.item;
     Cart cart = context.read<Cart>();
     return Card(
+      elevation: 8,
       clipBehavior: Clip.antiAlias,
       child: Column(
         children: [

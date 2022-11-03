@@ -2,7 +2,6 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:order_med/model/cart_model.dart';
 import 'package:order_med/pages/cart_page.dart';
-import 'package:order_med/globals.dart' as globals;
 import 'package:provider/provider.dart';
 
 class CartButton extends StatefulWidget {
