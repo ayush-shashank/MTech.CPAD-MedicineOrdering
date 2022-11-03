@@ -107,7 +107,7 @@ class _ProductPageState extends State<ProductPage> {
               var addToCart = ElevatedButton(
                   onPressed: (isAvailable && !isInCart)
                       ? () {
-                          context.read<Cart>().add(product);
+                          context.read<Cart>().add(product, 1);
                         }
                       : null,
                   child: Padding(

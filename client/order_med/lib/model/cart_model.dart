@@ -19,9 +19,10 @@ class Cart with ChangeNotifier {
     return '{orders: $_items, total: $_total}';
   }
 
-  void add(Product product) {
+  void add(Product product, int quantity) {
     CartItem newOrder = CartItem(product);
-    newOrder.quantity = 1;
+    newOrder.quantity = quantity;
+    newOrder.orderTotal = product.price * quantity;
     _items.add(newOrder);
     _total += newOrder.orderTotal;
     notifyListeners();
