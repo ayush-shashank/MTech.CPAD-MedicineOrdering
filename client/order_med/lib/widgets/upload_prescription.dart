@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:order_med/model/cart_item_model.dart';
@@ -21,6 +20,7 @@ class UploadPrescription extends StatefulWidget {
 class _UploadPrescriptionState extends State<UploadPrescription> {
   getImage() async {
     XFile? img = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (!mounted) return;
     context.read<Cart>().uploadPrescription(widget.index, img);
   }
 

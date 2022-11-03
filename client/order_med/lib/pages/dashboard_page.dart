@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:order_med/widgets/active_transactions.dart';
 import 'package:order_med/service/auth_service.dart';
@@ -49,15 +48,15 @@ class DashboardPage extends StatelessWidget {
         body: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const NavRow(),
-            const SizedBox(height: 8),
-            const Center(
+          children: const [
+            NavRow(),
+            SizedBox(height: 8),
+            Center(
                 child: Text(
               'Active Transactions',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             )),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             ActiveTransactions(),
           ],
         ));

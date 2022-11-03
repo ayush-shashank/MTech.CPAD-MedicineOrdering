@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:order_med/globals.dart';
 import 'package:order_med/model/cart_item_model.dart';
 import 'package:order_med/model/product_model.dart';
 

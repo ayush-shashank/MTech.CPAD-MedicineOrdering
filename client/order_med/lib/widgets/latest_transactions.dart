@@ -24,6 +24,7 @@ class _LatestTransactionsState extends State<LatestTransactions> {
 
   repeatOrder(BuildContext context, Order order) async {
     Product product = await ProductService.instance.getProduct(order.productId);
+    if (!mounted) return;
     Cart cart = context.read<Cart>();
     try {
       cart.add(product, order.quantity);
