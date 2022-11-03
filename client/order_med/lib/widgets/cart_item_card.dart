@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:order_med/model/cart_item_model.dart';
 import 'package:order_med/model/cart_model.dart';
 import 'package:order_med/widgets/upload_prescription.dart';
 import 'package:provider/provider.dart';
 import 'package:order_med/globals.dart' as globals;
+
+final formatCurrency = NumberFormat.currency(
+  name: "INR",
+  locale: 'en_IN',
+  decimalDigits: 2,
+  symbol: '₹ ',
+);
 
 class CartItemWidget extends StatefulWidget {
   final CartItem item;
@@ -17,6 +25,14 @@ class CartItemWidget extends StatefulWidget {
 }
 
 class _CartItemWidgetState extends State<CartItemWidget> {
+  _customCatch(BuildContext context, Object err) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.red[600],
+        duration: const Duration(milliseconds: 500),
+        content: Text(err.toString().split(':')[1].substring(1))));
+  }
+
   @override
   Widget build(BuildContext context) {
     int index = widget.index;
@@ -33,7 +49,11 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      cart.incrementQuantity(index);
+                      try {
+                        cart.incrementQuantity(index);
+                      } catch (err) {
+                        _customCatch(context, err);
+                      }
                     },
                     icon: const Icon(
                       Icons.add_circle,
@@ -44,7 +64,12 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                   SizedBox(height: 20, child: Text('${item.quantity}')),
                   IconButton(
                     onPressed: () {
-                      cart.decrementQuantity(index);
+                      try {
+                        cart.decrementQuantity(index);
+                      } catch (err) {
+                        print('object');
+                        _customCatch(context, err);
+                      }
                     },
                     icon: const Icon(
                       Icons.remove_circle,
@@ -78,6 +103,8 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
+              Text(formatCurrency.format(item.orderTotal)),
+              const SizedBox(width: 4),
               IconButton(
                   onPressed: () {
                     context.read<Cart>().remove(index);

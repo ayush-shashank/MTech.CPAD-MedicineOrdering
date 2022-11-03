@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:order_med/globals.dart';
 import 'package:order_med/model/cart_item_model.dart';
 import 'package:order_med/model/product_model.dart';
 
@@ -23,7 +24,12 @@ class Cart with ChangeNotifier {
     CartItem newOrder = CartItem(product);
     newOrder.quantity = quantity;
     newOrder.orderTotal = product.price * quantity;
-    _items.add(newOrder);
+    int index = items.indexWhere((item) => item.product.id == product.id);
+    if (index == -1) {
+      _items.add(newOrder);
+    } else {
+      items[index].quantity += newOrder.quantity;
+    }
     _total += newOrder.orderTotal;
     notifyListeners();
   }
@@ -34,7 +40,7 @@ class Cart with ChangeNotifier {
     try {
       ++order.quantity;
     } catch (err) {
-      print(err);
+      rethrow;
     } finally {
       _total += order.orderTotal;
     }
@@ -47,7 +53,7 @@ class Cart with ChangeNotifier {
     try {
       --order.quantity;
     } catch (err) {
-      print(err);
+      rethrow;
     } finally {
       _total += order.orderTotal;
     }

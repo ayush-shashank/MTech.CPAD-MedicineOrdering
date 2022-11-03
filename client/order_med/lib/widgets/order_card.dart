@@ -24,13 +24,18 @@ class OrderCard extends StatelessWidget {
 
   repeatOrder(BuildContext context) async {
     Product product = await ProductService.instance.getProduct(order.productId);
-    if (product.quantityAvailable < order.quantity) {
-      print('Quantity Error');
-    }
     Cart cart = context.read<Cart>();
-    cart.add(product, order.quantity);
-    print('Repeat Order');
-    Navigator.of(context).pushNamed(CartPage.routeName);
+    try {
+      cart.add(product, order.quantity);
+    } catch (err) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.red[600],
+          duration: const Duration(milliseconds: 250),
+          content: Text(err.toString().split(':')[1].substring(1))));
+      print(err);
+    }
+    // Navigator.of(context).pushNamed(CartPage.routeName);
   }
 
   @override

@@ -14,8 +14,10 @@ class CartItem {
 
   int get quantity => _quantity;
   set quantity(int value) {
-    if (value == 0 || value > _product.quantityAvailable) {
-      throw Exception("Invalid Quantity");
+    if (value == 0) {
+      throw Exception("Quantity cannot be 0!");
+    } else if (value > _product.quantityAvailable) {
+      throw Exception("Stock unavailable!");
     }
     _quantity = value;
     _orderTotal = _product.price * _quantity;
