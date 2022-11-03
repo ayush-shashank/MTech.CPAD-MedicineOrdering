@@ -26,7 +26,10 @@ class _LatestTransactionsState extends State<LatestTransactions> {
           shrinkWrap: true,
           itemCount: orderList.length,
           itemBuilder: (context, index) {
-            return OrderCard(order: orderList[index]);
+            return OrderCard(
+              order: orderList[index],
+              repeat: true,
+            );
           },
         );
       });

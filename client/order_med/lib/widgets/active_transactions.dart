@@ -35,7 +35,10 @@ class _ActiveTransactionsState extends State<ActiveTransactions> {
               shrinkWrap: true,
               itemCount: orderList.length,
               itemBuilder: (context, index) {
-                return OrderCard(order: orderList[index]);
+                return OrderCard(
+                  order: orderList[index],
+                  repeat: false,
+                );
               },
             ),
           );
