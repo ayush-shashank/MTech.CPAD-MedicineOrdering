@@ -10,7 +10,7 @@ final formatCurrency = NumberFormat.currency(
   name: "INR",
   locale: 'en_IN',
   decimalDigits: 2,
-  symbol: '₹ ',
+  symbol: '₹',
 );
 
 class CartPage extends StatefulWidget {
@@ -52,50 +52,34 @@ class _CartPageState extends State<CartPage> {
       bottomSheet: isEmpty
           ? null
           : Container(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              color: Colors.grey.shade300,
+              padding: const EdgeInsets.all(8),
+              color: Colors.orange,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: Text(
-                      formatCurrency.format(context.watch<Cart>().total),
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20,
-                          color: Colors.teal),
-                    ),
+                  Text(
+                    formatCurrency.format(context.watch<Cart>().total),
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.black),
                   ),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          //     textStyle:
-                          //         MaterialStateProperty.resolveWith((states) {
-                          //       if (states.contains(MaterialState.disabled)) {
-                          //         return TextStyle(color: Colors.grey.shade200);
-                          //       }
-                          //       return const TextStyle(color: Colors.white);
-                          //     }),
-                          //     backgroundColor:
-                          //         MaterialStateProperty.resolveWith((states) {
-                          //       if (states.contains(MaterialState.disabled)) {
-                          //         return Colors.grey.shade900;
-                          //       }
-                          //       return Colors.teal.shade700;
-                          //     }),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                      ))),
+                  ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                          textStyle: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          backgroundColor: Colors.black),
                       onPressed: context.watch<Cart>().isGood()
                           ? () => Navigator.pushNamed(
                               context, OrderProcessingPage.routeName)
                           : null,
-                      child: const Text(
-                        'Place Order',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ))
+                      icon: const Icon(Icons.shopping_cart_checkout_rounded),
+                      label: const Text('Place Order'))
                 ],
               ),
             ),

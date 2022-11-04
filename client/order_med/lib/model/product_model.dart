@@ -8,8 +8,12 @@ class Product {
   bool? _doesRequirePrescription;
   DateTime? _createdAt;
   DateTime? _updatedAt;
+  int discount = 50;
 
   Product();
+  double get salePrice {
+    return (_price! * (100 - discount)).round() / 100;
+  }
 
   String? get id => _id;
   set id(String? value) => _id = value;

@@ -9,7 +9,7 @@ final formatCurrency = NumberFormat.currency(
   name: "INR",
   locale: 'en_IN',
   decimalDigits: 2,
-  symbol: '₹ ',
+  symbol: '₹',
 );
 
 class SearchTile extends StatelessWidget {

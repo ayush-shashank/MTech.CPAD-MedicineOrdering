@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:order_med/model/cart_model.dart';
 import 'package:order_med/model/product_model.dart';
 import 'package:order_med/globals.dart' as globals;
@@ -8,6 +9,13 @@ import 'package:order_med/service/product_service.dart';
 import 'package:order_med/widgets/cart_button.dart';
 import 'package:order_med/widgets/quantity_counter.dart';
 import 'package:provider/provider.dart';
+
+final formatCurrency = NumberFormat.currency(
+  name: "INR",
+  locale: 'en_IN',
+  decimalDigits: 2,
+  symbol: '₹',
+);
 
 class ProductPage extends StatefulWidget {
   static const String routeName = '/product';
@@ -83,30 +91,30 @@ class _ProductPageState extends State<ProductPage> {
               children: [
                 Row(
                   children: [
-                    // Text(
-                    //   // (model.calculateDiscount > 0)
-                    //   (product.price > 0) ? "₹${product.price}" : "",
-                    //   textAlign: TextAlign.left,
-                    //   style: TextStyle(
-                    //     fontSize: 20,
-                    //     // color: model.calculateDiscount > 0
-                    //     color: product.price > 0 ? Colors.red : Colors.black,
-                    //     // decoration: model.productSalePrice > 0
-                    //     decoration: product.price > 0
-                    //         ? TextDecoration.lineThrough
-                    //         : null,
-                    //   ),
-                    // ),
                     Text(
-                      // (model.calculateDiscount > 0)
-                      //     ? " ${Config.currency}${model.productSalePrice.toString()}"
-                      //     : "",
-                      (product.price > 0) ? " ₹${product.price}" : "",
+                      formatCurrency.format(product.price),
                       textAlign: TextAlign.left,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
+                        color: product.discount > 0 ? Colors.red : Colors.black,
+                        decoration: product.discount > 0
+                            ? TextDecoration.lineThrough
+                            : null,
+                      ),
+                    ),
+                    Card(
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      color: Colors.green,
+                      child: Text(
+                        (product.discount > 0)
+                            ? ' ${formatCurrency.format(product.salePrice)} '
+                            : "",
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
@@ -141,7 +149,7 @@ class _ProductPageState extends State<ProductPage> {
                 ),
               ),
             ),
-            if (!product.doesRequirePrescription &&
+            if (product.doesRequirePrescription &&
                 product.quantityAvailable > 0)
               Card(
                 color: Colors.amber,
@@ -246,33 +254,6 @@ class _ProductPageState extends State<ProductPage> {
                     ],
                   ),
                 ),
-                bottomSheet: product.doesRequirePrescription
-                    ? Container(
-                        padding: const EdgeInsets.fromLTRB(4, 4, 8, 4),
-                        decoration: const BoxDecoration(color: Colors.red),
-                        child: Row(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(right: 4),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 4),
-                              child: const Icon(
-                                Icons.info_rounded,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const Expanded(
-                              child: Text(
-                                'An image of prescription will be required to order this product. Please attach the image while adding the product to the cart.',
-                                textAlign: TextAlign.justify,
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 14),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : null,
                 persistentFooterButtons: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -282,7 +263,7 @@ class _ProductPageState extends State<ProductPage> {
                           upperLimit: product.quantityAvailable,
                           onChanged: (quantity) => this.quantity = quantity),
                       Center(
-                          child: !product.doesRequirePrescription &&
+                          child: product.doesRequirePrescription &&
                                   isAvailable &&
                                   !isInCart
                               ? Badge(

@@ -10,6 +10,9 @@ class NavRow extends StatelessWidget {
       child: Row(children: [
         Expanded(
           child: Card(
+            elevation: 2,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             color: Colors.grey.shade400,
             child: InkWell(
               onTap: () => Navigator.of(context).pushNamed('/404'),
@@ -30,6 +33,8 @@ class NavRow extends StatelessWidget {
         ),
         Expanded(
             child: Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           elevation: 10,
           color: Colors.lightGreen,
           child: InkWell(
@@ -50,6 +55,9 @@ class NavRow extends StatelessWidget {
         )),
         Expanded(
             child: Card(
+          elevation: 2,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           color: Colors.grey.shade400,
           child: InkWell(
             onTap: () => Navigator.of(context).pushNamed('/404'),

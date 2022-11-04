@@ -10,7 +10,7 @@ final formatCurrency = NumberFormat.currency(
   name: "INR",
   locale: 'en_IN',
   decimalDigits: 2,
-  symbol: '₹ ',
+  symbol: '₹',
 );
 
 class CartItemWidget extends StatefulWidget {
@@ -67,7 +67,6 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                       try {
                         cart.decrementQuantity(index);
                       } catch (err) {
-                        print('object');
                         _customCatch(context, err);
                       }
                     },

@@ -9,7 +9,7 @@ final formatCurrency = NumberFormat.currency(
   name: "INR",
   locale: 'en_IN',
   decimalDigits: 2,
-  symbol: '₹ ',
+  symbol: '₹',
 );
 
 class OrderCard extends StatelessWidget {
@@ -22,7 +22,7 @@ class OrderCard extends StatelessWidget {
     return Card(
       elevation: 5,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(10),
       ),
       clipBehavior: Clip.antiAlias,
       child: Container(
@@ -73,16 +73,17 @@ class OrderCard extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   borderRadius: BorderRadius.circular(8.0),
                   child: CachedNetworkImage(
-                      imageUrl: '${globals.baseUrl}/${order.productImageURL}',
-                      progressIndicatorBuilder:
-                          (context, url, downloadProgress) => SizedBox(
-                                height: 50,
-                                width: 50,
-                                child: CircularProgressIndicator(
-                                    value: downloadProgress.progress),
-                              ),
-                      errorWidget: (context, url, error) =>
-                          Image.asset('assets/img/product-placeholder-wp.jpg')),
+                    imageUrl: '${globals.baseUrl}/${order.productImageURL}',
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: CircularProgressIndicator(
+                          value: downloadProgress.progress),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        Image.asset('assets/img/product-placeholder-wp.jpg'),
+                  ),
                 ),
                 // Image.network('${globals.baseUrl}/${order.productImageURL}',
                 //     width: 50,
