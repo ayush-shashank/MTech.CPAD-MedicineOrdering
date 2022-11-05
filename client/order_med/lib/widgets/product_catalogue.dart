@@ -34,14 +34,17 @@ class _ProductCatalogueState extends State<ProductCatalogue> {
         }
         if (snapshot.hasData) {
           List<Product> products = snapshot.data!;
-          return ListView.builder(
+          return GridView.count(
             physics: const NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            itemCount: products.length,
-            itemBuilder: (context, index) {
-              return ProductCard(product: products[index]);
-            },
+            scrollDirection: Axis.vertical,
+            crossAxisCount: 2,
+            children: List.generate(
+              products.length,
+              (index) {
+                return ProductCard(product: products[index]);
+              },
+            ),
           );
         }
         return const LinearProgressIndicator(
