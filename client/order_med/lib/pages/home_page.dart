@@ -19,15 +19,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     NetworkService.setBaseAddress();
-    // SchedulerBinding.instance.addPostFrameCallback((_) {
-    //   if (globals.isLoggedIn) {
-    //     print('isLoggedIn');
-    //     Navigator.pushNamed(context, '/dashboard');
-    //   } else {
-    //     print('isNotLoggedIn');
-    //     Navigator.pushNamed(context, '/login');
-    //   }
-    // });
   }
 
   @override
@@ -51,22 +42,3 @@ class _HomePageState extends State<HomePage> {
         });
   }
 }
-
-// body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             Text(resVal),
-//             Text(
-//               '$_counter',
-//               style: Theme.of(context).textTheme.headline4,
-//             ),
-//           ],
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: _incrementCounter,
-//         tooltip: 'Increment',
-//         child: const Icon(Icons.add),
-//       ),
-//     );

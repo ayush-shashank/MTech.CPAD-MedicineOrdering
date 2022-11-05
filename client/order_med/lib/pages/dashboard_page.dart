@@ -26,15 +26,23 @@ class DashboardPage extends StatelessWidget {
                         title: const Text('Logout'),
                         content: const Text('Are you sure you want to logout?'),
                         actions: [
-                          TextButton(
-                              child: const Text("Yes"),
-                              onPressed: () => AuthService().logout(context)),
-                          TextButton(
-                              child: const Text(
-                                "No",
-                                style: TextStyle(color: Colors.redAccent),
-                              ),
-                              onPressed: () => Navigator.of(context).pop())
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TextButton(
+                                  child: const Text("Yes"),
+                                  onPressed: () =>
+                                      AuthService().logout(context)),
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.redAccent),
+                                  child: const Text(
+                                    "No",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onPressed: () => Navigator.of(context).pop())
+                            ],
+                          ),
                         ],
                       ),
                     );

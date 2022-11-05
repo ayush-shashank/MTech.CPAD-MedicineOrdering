@@ -109,7 +109,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                     context.read<Cart>().remove(index);
                   },
                   icon: const Icon(
-                    Icons.delete,
+                    Icons.remove_shopping_cart_rounded,
                     color: Colors.red,
                   ))
             ],

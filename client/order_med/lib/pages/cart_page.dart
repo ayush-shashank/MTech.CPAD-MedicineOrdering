@@ -53,7 +53,7 @@ class _CartPageState extends State<CartPage> {
           ? null
           : Container(
               padding: const EdgeInsets.all(8),
-              color: Colors.orange,
+              color: Colors.teal.shade700,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,22 +64,33 @@ class _CartPageState extends State<CartPage> {
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
-                        color: Colors.black),
+                        color: Colors.white),
                   ),
                   ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                           textStyle: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 16,
+                            color: Colors.teal,
+                            fontWeight: FontWeight.bold,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.0),
                           ),
-                          backgroundColor: Colors.black),
+                          backgroundColor: Colors.white),
                       onPressed: context.watch<Cart>().isGood()
                           ? () => Navigator.pushNamed(
                               context, OrderProcessingPage.routeName)
                           : null,
-                      icon: const Icon(Icons.shopping_cart_checkout_rounded),
-                      label: const Text('Place Order'))
+                      icon: const Icon(
+                        Icons.shopping_cart_checkout_rounded,
+                        color: Colors.teal,
+                      ),
+                      label: const Text('Place Order',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.teal,
+                            fontWeight: FontWeight.bold,
+                          )))
                 ],
               ),
             ),

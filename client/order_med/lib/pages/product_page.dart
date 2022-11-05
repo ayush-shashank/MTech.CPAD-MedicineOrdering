@@ -230,9 +230,9 @@ class _ProductPageState extends State<ProductPage> {
                 key: const ValueKey(1),
                 extendBodyBehindAppBar: true,
                 appBar: AppBar(
-                    title: const Text(
-                      'Product Detail',
-                      style: TextStyle(shadows: [
+                    title: Text(
+                      product.name,
+                      style: const TextStyle(shadows: [
                         Shadow(offset: Offset(2, 2), blurRadius: 2.5)
                       ]),
                     ),
@@ -262,23 +262,21 @@ class _ProductPageState extends State<ProductPage> {
                       QuantityCounter(
                           upperLimit: product.quantityAvailable,
                           onChanged: (quantity) => this.quantity = quantity),
-                      Center(
-                          child: product.doesRequirePrescription &&
-                                  isAvailable &&
-                                  !isInCart
-                              ? Badge(
-                                  position:
-                                      BadgePosition.topEnd(top: -5, end: 5),
-                                  animationDuration:
-                                      const Duration(milliseconds: 300),
-                                  animationType: BadgeAnimationType.scale,
-                                  badgeContent: const Text(
-                                    '!',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  child: addToCart,
-                                )
-                              : addToCart),
+                      product.doesRequirePrescription &&
+                              isAvailable &&
+                              !isInCart
+                          ? Badge(
+                              position: BadgePosition.topEnd(top: -5, end: 5),
+                              animationDuration:
+                                  const Duration(milliseconds: 300),
+                              animationType: BadgeAnimationType.scale,
+                              badgeContent: const Text(
+                                '!',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              child: addToCart,
+                            )
+                          : addToCart,
                     ],
                   ),
                 ],
