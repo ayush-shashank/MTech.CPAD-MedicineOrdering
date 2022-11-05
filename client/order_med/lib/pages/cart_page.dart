@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:order_med/model/cart_item_model.dart';
 import 'package:order_med/model/cart_model.dart';
 import 'package:order_med/pages/order_processing.dart';
+import 'package:order_med/widgets/bottom_nav_bar.dart';
 import 'package:order_med/widgets/cart_item_card.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -27,6 +28,7 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     bool isEmpty = context.read<Cart>().items.isEmpty;
     return Scaffold(
+      bottomNavigationBar: BottomNavBar(index: 4),
       appBar: AppBar(
           title: Row(
               crossAxisAlignment: CrossAxisAlignment.center,

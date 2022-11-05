@@ -38,7 +38,10 @@ class RouterService {
         return MaterialPageRoute(
             builder: (_) => ProductPage(productId: productId));
       case underConstructionRoute:
-        return MaterialPageRoute(builder: (_) => const UnderConstruction());
+        Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
+        int? index = args['index'];
+        return MaterialPageRoute(
+            builder: (_) => UnderConstruction(index: index!));
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

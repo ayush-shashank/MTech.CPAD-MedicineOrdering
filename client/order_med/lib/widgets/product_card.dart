@@ -19,114 +19,119 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      decoration: const BoxDecoration(color: Colors.white),
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      child: Stack(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Visibility(
-                  visible: product.discount > 0,
-                  child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: const BoxDecoration(
-                            color: Colors.green,
-                          ),
-                          child: Text(
-                            "${product.discount}% OFF",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
+    return Card(
+      child: Container(
+        height: 290,
+        width: 150,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(20)),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        child: Stack(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Visibility(
+                    visible: product.discount > 0,
+                    child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.green,
                             ),
-                          )))),
-              GestureDetector(
-                child: Hero(
-                  tag: 'location-img-${product.id}',
-                  child: SizedBox(
-                    height: 100,
-                    width: MediaQuery.of(context).size.width,
-                    child: CachedNetworkImage(
-                      imageUrl: '${globals.baseUrl}/${product.productImage}',
-                      progressIndicatorBuilder:
-                          (context, url, downloadProgress) => SizedBox(
-                        height: 50,
-                        width: 50,
-                        child: CircularProgressIndicator(
-                            value: downloadProgress.progress),
+                            child: Text(
+                              "${product.discount}% OFF",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            )))),
+                GestureDetector(
+                  child: Hero(
+                    tag: 'location-img-${product.id}',
+                    child: SizedBox(
+                      height: 100,
+                      width: MediaQuery.of(context).size.width,
+                      child: CachedNetworkImage(
+                        imageUrl: '${globals.baseUrl}/${product.productImage}',
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) => SizedBox(
+                          height: 50,
+                          width: 50,
+                          child: CircularProgressIndicator(
+                              value: downloadProgress.progress),
+                        ),
+                        errorWidget: (context, url, error) => Image.asset(
+                            'assets/img/product-placeholder-wp.jpg'),
                       ),
-                      errorWidget: (context, url, error) =>
-                          Image.asset('assets/img/product-placeholder-wp.jpg'),
                     ),
                   ),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      ProductPage.routeName,
+                      arguments: product.id,
+                    );
+                  },
                 ),
-                onTap: () {
-                  Navigator.of(context).pushNamed(
-                    ProductPage.routeName,
-                    arguments: product.id,
-                  );
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8, left: 10),
-                child: Text(
-                  product.name,
-                  textAlign: TextAlign.left,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontSize: 13,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8, left: 10),
+                  child: Text(
+                    product.name,
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      child: Row(
-                        children: [
-                          Text(formatCurrency.format(product.price),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Row(
+                          children: [
+                            Text(formatCurrency.format(product.price),
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: product.discount > 0
+                                      ? Colors.red
+                                      : Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  decoration: product.salePrice > 0
+                                      ? TextDecoration.lineThrough
+                                      : null,
+                                )),
+                            Text(
+                              (product.discount > 0)
+                                  ? " ${formatCurrency.format(product.salePrice)}"
+                                  : "",
                               textAlign: TextAlign.left,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
-                                color: product.discount > 0
-                                    ? Colors.red
-                                    : Colors.black,
+                                color: Colors.black,
                                 fontWeight: FontWeight.bold,
-                                decoration: product.salePrice > 0
-                                    ? TextDecoration.lineThrough
-                                    : null,
-                              )),
-                          Text(
-                            (product.discount > 0)
-                                ? " ${formatCurrency.format(product.salePrice)}"
-                                : "",
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    const FavIcon()
-                  ],
-                ),
-              )
-            ],
-          ),
-        ],
+                      const FavIcon()
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

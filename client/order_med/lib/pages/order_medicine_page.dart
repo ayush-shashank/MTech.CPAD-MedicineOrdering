@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:order_med/model/product_model.dart';
 import 'package:order_med/service/product_service.dart';
 import 'package:order_med/service/search_delegate.dart';
+import 'package:order_med/widgets/bottom_nav_bar.dart';
 import 'package:order_med/widgets/cart_button.dart';
 import 'package:order_med/widgets/latest_transactions.dart';
 import 'package:order_med/widgets/product_catalogue.dart';
@@ -19,6 +20,7 @@ class _OrderMedicinePageState extends State<OrderMedicinePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        bottomNavigationBar: BottomNavBar(index: 3),
         appBar: AppBar(
           title: const Text(
             'Order Medicine',

@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:order_med/widgets/active_transactions.dart';
 import 'package:order_med/service/auth_service.dart';
+import 'package:order_med/widgets/bottom_nav_bar.dart';
 import 'package:order_med/widgets/nav_row.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -12,6 +13,7 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        bottomNavigationBar: BottomNavBar(index: 2),
         appBar: AppBar(title: const Text("Dashboard"), actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20),

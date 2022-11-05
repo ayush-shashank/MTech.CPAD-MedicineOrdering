@@ -1,12 +1,16 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:navbar_router/navbar_router.dart';
+import 'package:order_med/model/cart_model.dart';
 import 'package:order_med/pages/cart_page.dart';
 import 'package:order_med/pages/dashboard_page.dart';
 import 'package:order_med/pages/order_medicine_page.dart';
 import 'package:order_med/pages/under_construction.dart';
-import 'package:order_med/widgets/cart_button.dart';
+import 'package:provider/provider.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
+  int index;
+  BottomNavBar({super.key, this.index = 2});
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -21,14 +25,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
     CartPage.routeName,
   ];
   int _index = 2;
-  Future<void> navigate(BuildContext context, String route,
-          {bool isDialog = false,
-          bool isRootNavigator = true,
-          Map<String, dynamic>? arguments}) =>
-      Navigator.of(context, rootNavigator: isRootNavigator)
-          .pushNamed(route, arguments: arguments);
+
   _onTap() {
-    navigate(context, _routeList[_index], isRootNavigator: false);
+    if (_index == 0 || _index == 1) {
+      navigate(context, _routeList[_index],
+          isRootNavigator: false, arguments: {"index": _index});
+    } else {
+      navigate(context, _routeList[_index], isRootNavigator: false);
+    }
   }
 
   @override
@@ -38,24 +42,35 @@ class _BottomNavBarState extends State<BottomNavBar> {
       selectedItemColor: Colors.teal.shade700,
       unselectedItemColor: Colors.black,
       type: BottomNavigationBarType.shifting,
-      currentIndex: _index,
-      showUnselectedLabels: true,
+      currentIndex: widget.index,
       onTap: (index) {
         setState(() {
           _index = index;
         });
         _onTap();
       },
-      items: const [
-        BottomNavigationBarItem(
+      items: [
+        const BottomNavigationBarItem(
             icon: Icon(Icons.vaccines_rounded), label: "Book Doctor"),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
             icon: Icon(Icons.medical_services_outlined), label: "Book Lab"),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
             icon: Icon(Icons.dashboard_rounded), label: "Dashboard"),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
             icon: Icon(Icons.medication_rounded), label: "Order Medicine"),
-        BottomNavigationBarItem(icon: CartButton(), label: "My Cart"),
+        BottomNavigationBarItem(
+            icon: context.watch<Cart>().items.isNotEmpty
+                ? Badge(
+                    position: BadgePosition.topEnd(top: -10, end: -10),
+                    animationDuration: const Duration(milliseconds: 300),
+                    animationType: BadgeAnimationType.slide,
+                    badgeContent: Text(
+                      '${context.watch<Cart>().items.length}',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    child: const Icon(Icons.shopping_cart_rounded))
+                : const Icon(Icons.shopping_cart_rounded),
+            label: "My Cart"),
       ],
 
       // body: widgetList[index],
