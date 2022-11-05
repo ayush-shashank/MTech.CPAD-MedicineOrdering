@@ -15,13 +15,6 @@ class LatestTransactions extends StatefulWidget {
 }
 
 class _LatestTransactionsState extends State<LatestTransactions> {
-  Widget orders = const Center(child: Text("No Transactions"));
-  @override
-  void initState() {
-    super.initState();
-    getLatestTransactions();
-  }
-
   repeatOrder(BuildContext context, Order order) async {
     Product product = await ProductService.instance.getProduct(order.productId);
     if (!mounted) return;
@@ -39,69 +32,64 @@ class _LatestTransactionsState extends State<LatestTransactions> {
     // Navigator.of(context).pushNamed(CartPage.routeName);
   }
 
-  void getLatestTransactions() async {
-    List<Order> orderList = await OrderService.instance.getLatestTransactions();
-    if (orderList.isNotEmpty) {
-      setState(() {
-        orders = ListView.builder(
-          shrinkWrap: true,
-          itemCount: orderList.length,
-          itemBuilder: (context, index) {
-            return Row(
-              children: [
-                Expanded(
-                  child: OrderCard(order: orderList[index]),
-                ),
-                Card(
-                  margin: const EdgeInsets.only(right: 4),
-                  elevation: 4,
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    onTap: () {
-                      // Add to Cart
-                      repeatOrder(context, orderList[index]);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      color: Colors.amber,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.replay_circle_filled_rounded,
-                            size: 32,
-                          ),
-                          Text('Repeat'),
-                          Text('Order'),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            );
-          },
-        );
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 8),
-        const Center(
-            child: Text(
-          'Latest Transactions',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        )),
-        const SizedBox(
-          height: 8,
-        ),
-        orders
-      ],
+    return FutureBuilder<List<Order>>(
+      future: OrderService.instance.getLatestTransactions(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const Center(child: Text("Could Not Fetch Data!"));
+        }
+        if (snapshot.hasData) {
+          List<Order> orders = snapshot.data!;
+          if (orders.isNotEmpty) {
+            return ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: orders.length < 3 ? orders.length : 3,
+                itemBuilder: (context, index) {
+                  return Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: OrderCard(order: orders[index]),
+                        ),
+                        Card(
+                          margin: const EdgeInsets.only(right: 4),
+                          elevation: 4,
+                          clipBehavior: Clip.antiAlias,
+                          child: InkWell(
+                            onTap: () {
+                              // Add to Cart
+                              repeatOrder(context, orders[index]);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              color: Colors.amber,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.replay_circle_filled_rounded,
+                                    size: 32,
+                                  ),
+                                  Text('Repeat'),
+                                  Text('Order'),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ]);
+                });
+          }
+          return const Center(child: Text("No Transactions"));
+        }
+        return const LinearProgressIndicator(
+          minHeight: 10,
+        );
+      },
     );
   }
 }
