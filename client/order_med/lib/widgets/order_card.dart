@@ -19,6 +19,7 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('IMG =>>>> ${globals.baseUrl}/${order.productImageURL}');
     return Card(
       elevation: 5,
       shape: RoundedRectangleBorder(

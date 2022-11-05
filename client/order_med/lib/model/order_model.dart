@@ -4,7 +4,7 @@ class Order {
   String? _productId;
   String? _productName;
   int? _quantity = 0;
-  double? _orderAmount = 0;
+  num _orderAmount = 0;
   bool _isActive = true;
   String _prescriptionURL = '';
   String _productImageURL = '';
@@ -52,7 +52,7 @@ class Order {
     _productId = json['productId'];
     _productName = json['productName'] ?? '';
     _quantity = json['quantity'] ?? 0;
-    _orderAmount = json['orderAmount'] ?? 0;
+    _orderAmount = json['orderAmount'];
     _isActive = json['isActive'];
     _prescriptionURL = json['prescriptionURL'];
     _productImageURL = json['productImageURL'];

@@ -61,6 +61,7 @@ user.post('/:id/orderMedicine', async (req, res) => {
                     customerId: req.params.id,
                     productId: productDoc._id,
                     productName: productDoc.name,
+                    productImageURL: productDoc.productImageURL,
                     orderAmount: (productDoc.price * order.quantity),
                     ...order
                 }).save();
