@@ -1,0 +1,69 @@
+1. Landing Page (on successful login)
+	Navigation -	Book Doctor Appointment -> Under Construction
+			Book Lab Appointment -> Under Construction
+			Order Medicines -> Order Medicine Page
+	Dashboard -	List of Active Transactions/"No Transactions"
+2. Order Medicine Page
+	Search Medicines - by Name and View medicine details
+		
+	Last 3 Transactions of medicines ordered/"No Teansactions"
+		"Refill" - to repeat order
+
+3. Select searched product
+	Details of product -	Doctor Priscription required?
+				Other Basic Details
+	Add to cart - 	With Quantity
+			Disabled if product not in stock
+			Priscription Required?
+				N - Add
+				Y - Browse -> Upload -> Add to cart
+########################################################################
+RDBMS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Customer
+---------
+*ID	Name	Email	Ph.No	Password
+
+Product (Medicine)
+------------------
+*ID	Name	Weight	Price	Stock	Priscription?
+
+Orders
+-------
+*ID	CustID	ProdID	Qty	Status
+
+````````````````````````````````````````````````````````````````````````
+NoSQL
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Customer
+---------
+{
+  "_id": {
+    "$oid": "63400b62d44169c63b054ce7"
+  },
+  "name": "Ayush",
+  "email": "ayush@bits.in",
+  "phno": 1234567890,
+  "password": "password"
+  "orders":[
+	{
+	  "id":"3400caad44169c63b054cef",
+	  "qty": 5,
+	  "isActive": true
+	}
+  ]
+}
+
+Product
+--------
+{
+  "_id": {
+    "$oid": "63400caad44169c63b054cef"
+  },
+  "name": "med1",
+  "weightInGrams": 100,
+  "price": 100,
+  "qtyAvailable": 10,
+  "doesPriscription": false
+}
+########################################################################
