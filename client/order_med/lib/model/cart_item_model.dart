@@ -20,7 +20,7 @@ class CartItem {
       throw Exception("Stock unavailable!");
     }
     _quantity = value;
-    _orderTotal = _product.price * _quantity;
+    _orderTotal = _product.salePrice * _quantity;
   }
 
   num get orderTotal => _orderTotal;

@@ -21,7 +21,7 @@ class Cart with ChangeNotifier {
   void add(Product product, int quantity) {
     CartItem newOrder = CartItem(product);
     newOrder.quantity = quantity;
-    newOrder.orderTotal = product.price * quantity;
+    newOrder.orderTotal = product.salePrice * quantity;
     int index = items.indexWhere((item) => item.product.id == product.id);
     if (index == -1) {
       _items.add(newOrder);
