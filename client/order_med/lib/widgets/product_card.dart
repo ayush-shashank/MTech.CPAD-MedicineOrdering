@@ -54,9 +54,10 @@ class ProductCard extends StatelessWidget {
                   child: Hero(
                     tag: 'location-img-${product.id}',
                     child: SizedBox(
-                      height: 100,
+                      height: 50,
                       width: MediaQuery.of(context).size.width,
                       child: CachedNetworkImage(
+                        fit: BoxFit.fitHeight,
                         imageUrl: '${globals.baseUrl}/${product.productImage}',
                         progressIndicatorBuilder:
                             (context, url, downloadProgress) => SizedBox(

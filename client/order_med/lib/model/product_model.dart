@@ -2,7 +2,7 @@ class Product {
   String? _id;
   String? _name;
   int? _weightInGrams;
-  double? _price;
+  num? _price;
   int? _quantityAvailable;
   String? _productImage;
   bool? _doesRequirePrescription;
@@ -45,8 +45,9 @@ class Product {
   Product.fromJson(Map<String, dynamic> json) {
     _id = json['_id'];
     _name = json['name'] ?? '';
-    _weightInGrams = json['weightInGrams'] ?? 0;
-    _price = json['price'] ?? 0;
+    _weightInGrams = json['weightInGrams'];
+    _price = json['price'];
+    discount = json['discount'];
     _quantityAvailable = json['quantityAvailable'] ?? 0;
     _productImage = (json['productImageURL']);
     _doesRequirePrescription = json['doesRequirePrescription'] ?? false;
