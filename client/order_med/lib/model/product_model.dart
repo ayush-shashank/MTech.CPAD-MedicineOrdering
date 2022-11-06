@@ -1,7 +1,7 @@
 class Product {
   String? _id;
   String? _name;
-  int? _weightInGrams;
+  num? _weightInGrams;
   num? _price;
   int? _quantityAvailable;
   String? _productImage;
